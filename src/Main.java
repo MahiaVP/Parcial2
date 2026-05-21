@@ -9,7 +9,7 @@ public class Main {
         System.out.println("Library System\n");
         do {
             System.out.println("Type the number of the action you want to perform:\n");
-            System.out.println("1. See all books in the library.\n2. See availability of a book.\n3. Lend a book\n4. Return a book\n5. Add a book to the system.\n6. Filter by category.\n7. Exit\n");
+            System.out.println("1. See all books in the library.\n2. See availability of a book.\n3. Lend a book\n4. Return a book\n5. Add a book to the system.\n6. Filter by category.\n7. Find location of a book.\n8. Exit\n");
             switch (read.nextInt()) {
                 case 1:
                     BookDAO.ReadBook();
@@ -42,6 +42,8 @@ public class Main {
                     break;
                 case 3:
                     read.nextLine();
+                    System.out.println("Please type the person's name");
+                    String name=read.nextLine();
                     System.out.println("How would you like to search the book?\n1. Title\n2. Author\n3. Genre\n4. Return.");
                     switch (read.nextInt()) {
                         case 1:
@@ -66,7 +68,13 @@ public class Main {
                             continue;
                         }
                     System.out.println("Write the book id");
-                    BookDAO.LendBook(read.nextInt());
+                    BookDAO.LendBook(read.nextInt(),name);
+                case 4:
+                    read.nextLine();
+                    System.out.println("Write the person's name");
+                    read.nextLine();
+
+
             }
                     System.out.println("1. Return\n2. Exit\n");
                     k = read.nextInt();

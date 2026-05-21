@@ -2,6 +2,7 @@ package DB.OP;
 import  DB.DataConnection;
 import java.sql.*;
 import Code.Book;
+
 public class BookDAO {
     public static void InsertBook(Book b) throws SQLException {
         String add_Book="INSERT INTO Library (Book,Author,Genre,Units_Available) values(?,?,?,?,?,?)";
@@ -13,6 +14,7 @@ public class BookDAO {
             di.setString(2, b.getAuthor());
             di.setString(3,b.getGenre());
             di.setInt(4,b.getAvailability());
+            di.executeUpdate(add_Book);
 
             System.out.println("Added correctly");
         }
@@ -123,7 +125,7 @@ public class BookDAO {
         }
     }
 
-    public static void LendBook(int i){
+    public static void LendBook(int i,String name){
         String search_id = "SELECT * FROM library WHERE id = ?";
         String lend = "UPDATE library set units_available = ? WHERE id = ?";
 
@@ -131,7 +133,7 @@ public class BookDAO {
              PreparedStatement di = conn.prepareStatement(search_id);
         ){
             di.setInt(1,i);
-            ResultSet rs = di.executeQuery();
+            ResultSet rs = di.executeQuery(search_id);
             if (!rs.next()) {
                 System.out.println("There is no book with that id");
                 return;
@@ -147,8 +149,9 @@ public class BookDAO {
             PreparedStatement ld = conn.prepareStatement(lend);
             ld.setInt(1,ua);
             ld.setInt(2,i);
-            ld.executeUpdate();
+            ld.executeUpdate(lend);
             String book=rs.getString("book");
+            LentDAO.Insert_person(book,name);
             System.out.println("The action was performed successfully. Units available of "+book+": "+ua);
         }
 
@@ -156,4 +159,6 @@ public class BookDAO {
             System.err.println("Error: "+e.getMessage());
         }
     }
+
+
 }
