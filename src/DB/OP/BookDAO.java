@@ -24,7 +24,7 @@ public class BookDAO {
     }
 
     public static void ReadBook(){
-        String rd = "SELECT * FROM library";
+        String rd = "SELECT * FROM library ORDER BY id ASC";
 
         try (Connection conn = DataConnection.getConnection();
              Statement st = conn.createStatement();
@@ -33,10 +33,10 @@ public class BookDAO {
             System.out.println("|   ID  |   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
             while(rs.next()){
                 int id = rs.getInt("id");
-                String book = rs.getString("Book");
-                String author = rs.getString("Author");
-                String genre = rs.getString("Genre");
-                int u_a = rs.getInt("Units_Available");
+                String book = rs.getString("book");
+                String author = rs.getString("author");
+                String genre = rs.getString("genre");
+                int u_a = rs.getInt("units_available");
 
                 System.out.println("|  "+id + "  |  " + book + "   |   " + author + "  |  " + genre + "  |  " + u_a +"  |");
             }
@@ -46,7 +46,7 @@ public class BookDAO {
     }
 
     public static void ReadTitle(String s){
-        String search_title = "SELECT * FROM library WHERE book ILIKE ?";
+        String search_title = "SELECT * FROM library WHERE book ILIKE ? ORDER BY id ASC";
 
         try (Connection conn = DataConnection.getConnection();
             PreparedStatement di = conn.prepareStatement(search_title);
@@ -54,14 +54,15 @@ public class BookDAO {
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
 
-            System.out.println("|   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
+            System.out.println("|   ID  |   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
             while(rs.next()){
+                int id = rs.getInt("id");
                 String book = rs.getString("book");
                 String author = rs.getString("author");
                 String genre = rs.getString("genre");
                 int u_a = rs.getInt("units_available");
 
-                System.out.println("|"+book+"|"+author+"|"+genre+"|"+u_a+"|");
+                System.out.println("|  "+id + "  |  " + book + "   |   " + author + "  |  " + genre + "  |  " + u_a +"  |");
             }
         }
 
@@ -71,7 +72,7 @@ public class BookDAO {
     }
 
     public static void ReadAuthor(String s){
-        String search_author = "SELECT * FROM library WHERE author ILIKE ?";
+        String search_author = "SELECT * FROM library WHERE author ILIKE ? ORDER BY id ASC";
 
         try (Connection conn = DataConnection.getConnection();
              PreparedStatement di = conn.prepareStatement(search_author);
@@ -79,14 +80,15 @@ public class BookDAO {
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
 
-            System.out.println("|   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
+            System.out.println("|   ID  |   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
             while(rs.next()){
+                int id = rs.getInt("id");
                 String book = rs.getString("book");
                 String author = rs.getString("author");
                 String genre = rs.getString("genre");
                 int u_a = rs.getInt("units_available");
 
-                System.out.println("|"+book+"|"+author+"|"+genre+"|"+u_a+"|");
+                System.out.println("|  "+id + "  |  " + book + "   |   " + author + "  |  " + genre + "  |  " + u_a +"  |");
             }
         }
 
@@ -96,7 +98,7 @@ public class BookDAO {
     }
 
     public static void ReadGenre(String s){
-        String search_genre = "SELECT * FROM library WHERE genre ILIKE ?";
+        String search_genre = "SELECT * FROM library WHERE genre ILIKE ? ORDER BY id ASC";
 
         try (Connection conn = DataConnection.getConnection();
              PreparedStatement di = conn.prepareStatement(search_genre);
@@ -104,15 +106,50 @@ public class BookDAO {
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
 
-            System.out.println("|   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
+            System.out.println("|   ID  |   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
             while(rs.next()){
+                int id = rs.getInt("id");
                 String book = rs.getString("book");
                 String author = rs.getString("author");
                 String genre = rs.getString("genre");
                 int u_a = rs.getInt("units_available");
 
-                System.out.println("|"+book+"|"+author+"|"+genre+"|"+u_a+"|");
+                System.out.println("|  "+id + "  |  " + book + "   |   " + author + "  |  " + genre + "  |  " + u_a +"  |");
             }
+        }
+
+        catch(Exception e){
+            System.err.println("Error: "+e.getMessage());
+        }
+    }
+
+    public static void LendBook(int i){
+        String search_id = "SELECT * FROM library WHERE id = ?";
+        String lend = "UPDATE library set units_available = ? WHERE id = ?";
+
+        try (Connection conn = DataConnection.getConnection();
+             PreparedStatement di = conn.prepareStatement(search_id);
+        ){
+            di.setInt(1,i);
+            ResultSet rs = di.executeQuery();
+            if (!rs.next()) {
+                System.out.println("There is no book with that id");
+                return;
+            }
+
+            int ua = rs.getInt("units_available");
+            if(ua==0){
+                System.out.println("There are no units available");
+                return;
+            }
+            ua--;
+
+            PreparedStatement ld = conn.prepareStatement(lend);
+            ld.setInt(1,ua);
+            ld.setInt(2,i);
+            ld.executeUpdate();
+            String book=rs.getString("book");
+            System.out.println("The action was performed successfully. Units available of "+book+": "+ua);
         }
 
         catch(Exception e){
