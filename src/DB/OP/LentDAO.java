@@ -23,7 +23,7 @@ public class LentDAO {
         try(Connection conn = DataConnection.getConnection();
             PreparedStatement sp = conn.prepareStatement(search_person);
         ){
-            sp.setString(1,name);
+            sp.setString(1,"%"+name+"%");
             ResultSet rs = sp.executeQuery();
             System.out.println("|   ID  |   NAME    |   BOOK    |   DATE    |");
             while(rs.next()){
@@ -33,11 +33,24 @@ public class LentDAO {
                 String date = rs.getString("date");
                 System.out.println("|   "+id+"  |   "+pname+"   |   "+book+"    |   "+date+"    |   ");
             }
-
-
         }
         catch (SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
+    }
+
+    public static void Delete_person(int id){
+        String delete_person="DELETE FROM lent_books WHERE id=?";
+
+        try(Connection conn=DataConnection.getConnection();
+            PreparedStatement dp = conn.prepareStatement(delete_person);
+        ){
+            dp.setInt(1,id);
+            dp.executeUpdate();
+        }
+        catch (SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+
     }
 }

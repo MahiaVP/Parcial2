@@ -1,4 +1,5 @@
 import DB.OP.BookDAO;
+import DB.OP.LentDAO;
 
 import java.util.Scanner;
 
@@ -72,7 +73,9 @@ public class Main {
                 case 4:
                     read.nextLine();
                     System.out.println("Write the person's name");
-                    read.nextLine();
+                    LentDAO.ReturnBook(read.nextLine());
+                    System.out.println("Type the person's id");
+                    LentDAO.Delete_person(read.nextInt());
 
 
             }
