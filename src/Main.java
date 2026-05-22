@@ -40,6 +40,24 @@ public class Main {
                             switch (read.nextInt()) {
                                 case 1:
                                     genre = String.valueOf(Genre.FANTASY);
+                                    break;
+                                case 2:
+                                    genre = String.valueOf(Genre.ROMANCE);
+                                    break;
+                                case 3:
+                                    genre = String.valueOf(Genre.SCI_FI);
+                                    break;
+                                case 4:
+                                    genre = String.valueOf(Genre.MYSTERY);
+                                    break;
+                                case 5:
+                                    genre = String.valueOf(Genre.HORROR);
+                                    break;
+                                case 6:
+                                    genre = String.valueOf(Genre.POETRY);
+                                    break;
+                                case 7:
+                                    continue;
                             }
                             BookDAO.ReadGenre(genre);
                             break;
