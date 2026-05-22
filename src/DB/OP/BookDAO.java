@@ -4,8 +4,8 @@ import java.sql.*;
 import Code.Book;
 
 public class BookDAO {
-    public static void InsertBook(Book b) throws SQLException {
-        String add_Book="INSERT INTO Library (Book,Author,Genre,Units_Available) values(?,?,?,?,?,?)";
+    public static void InsertBook(Book b){
+        String add_Book="INSERT INTO Library (Book,Author,Genre,Units_Available) values(?,?,?,?)";
 
         try (Connection conn = DataConnection.getConnection();
             PreparedStatement di = conn.prepareStatement(add_Book);
@@ -14,11 +14,10 @@ public class BookDAO {
             di.setString(2, b.getAuthor());
             di.setString(3,b.getGenre());
             di.setInt(4,b.getAvailability());
-            di.executeUpdate(add_Book);
+            di.executeUpdate();
 
             System.out.println("Added correctly");
         }
-
         catch (SQLException e)
         {
             System.err.println("Error: "+e.getMessage());
@@ -100,12 +99,12 @@ public class BookDAO {
     }
 
     public static void ReadGenre(String s){
-        String search_genre = "SELECT * FROM library WHERE genre ILIKE ? ORDER BY id ASC";
+        String search_genre = "SELECT * FROM library WHERE genre = ? ORDER BY id ASC";
 
         try (Connection conn = DataConnection.getConnection();
              PreparedStatement di = conn.prepareStatement(search_genre);
         ){
-            di.setString(1,"%"+s+"%");
+            di.setString(1,s);
             ResultSet rs = di.executeQuery();
 
             System.out.println("|   ID  |   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
@@ -133,7 +132,7 @@ public class BookDAO {
              PreparedStatement di = conn.prepareStatement(search_id);
         ){
             di.setInt(1,i);
-            ResultSet rs = di.executeQuery(search_id);
+            ResultSet rs = di.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no book with that id");
                 return;
@@ -149,7 +148,7 @@ public class BookDAO {
             PreparedStatement ld = conn.prepareStatement(lend);
             ld.setInt(1,ua);
             ld.setInt(2,i);
-            ld.executeUpdate(lend);
+            ld.executeUpdate();
             String book=rs.getString("book");
             LentDAO.Insert_person(book,name);
             System.out.println("The action was performed successfully. Units available of "+book+": "+ua);

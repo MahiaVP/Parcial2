@@ -52,5 +52,6 @@ public class LentDAO {
             System.err.println("Error: "+e.getMessage());
         }
 
+        System.out.println("Returned successfully");
     }
 }
