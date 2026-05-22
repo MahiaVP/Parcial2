@@ -130,6 +130,7 @@ public class BookDAO {
 
         try (Connection conn = DataConnection.getConnection();
              PreparedStatement di = conn.prepareStatement(search_id);
+             PreparedStatement ld = conn.prepareStatement(lend);
         ){
             di.setInt(1,i);
             ResultSet rs = di.executeQuery();
@@ -145,7 +146,6 @@ public class BookDAO {
             }
             ua--;
 
-            PreparedStatement ld = conn.prepareStatement(lend);
             ld.setInt(1,ua);
             ld.setInt(2,i);
             ld.executeUpdate();
@@ -154,6 +154,31 @@ public class BookDAO {
             System.out.println("The action was performed successfully. Units available of "+book+": "+ua);
         }
 
+        catch(Exception e){
+            System.err.println("Error: "+e.getMessage());
+        }
+    }
+
+    public static void UpdateQuantity(String book,int q){
+        String search_book = "SELECT * FROM library WHERE book = ?";
+        String update = "UPDATE library SET units_available = ? WHERE book = ?";
+
+        try(Connection conn=DataConnection.getConnection();
+            PreparedStatement sb = conn.prepareStatement(search_book);
+            PreparedStatement rb = conn.prepareStatement(update);
+        ){
+            sb.setString(1,book);
+            ResultSet rs = sb.executeQuery();
+            int ua=0;
+            if(rs.next()){
+                ua = rs.getInt("units_available")+q;
+                rb.setInt(1,ua);
+                rb.setString(2,book);
+                rb.executeUpdate();
+            }
+            System.out.println("The action was performed successfully. Units of "+book+" available: "+ua);
+
+        }
         catch(Exception e){
             System.err.println("Error: "+e.getMessage());
         }

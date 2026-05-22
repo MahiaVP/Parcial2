@@ -40,18 +40,29 @@ public class LentDAO {
     }
 
     public static void Delete_person(int id){
+        String search_book = "SELECT * FROM lent_books WHERE id = ?";
         String delete_person="DELETE FROM lent_books WHERE id=?";
 
         try(Connection conn=DataConnection.getConnection();
+            PreparedStatement sp = conn.prepareStatement(search_book);
             PreparedStatement dp = conn.prepareStatement(delete_person);
+
         ){
+            sp.setInt(1,id);
+            ResultSet rs = sp.executeQuery();
+            if(rs.next()){
+                String book = rs.getString("book");
+                int q=1;
+                BookDAO.UpdateQuantity(book,q);
+            }
+
             dp.setInt(1,id);
             dp.executeUpdate();
+            System.out.println("Returned successfully");
         }
         catch (SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
 
-        System.out.println("Returned successfully");
     }
 }
