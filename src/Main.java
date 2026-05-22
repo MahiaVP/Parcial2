@@ -86,7 +86,30 @@ public class Main {
                         case 3:
                             read.nextLine();
                             System.out.println("Please enter the genre:");
-                            String genre = read.nextLine();
+                            System.out.println("Please enter the genre:\n1. Fantasy\n2. Romance\n3. Science Fiction.\n4. Mystery.\n5. Horror.\n6. Poetry.\n7. Return.");
+                            String genre = "";
+                            switch (read.nextInt()) {
+                                case 1:
+                                    genre = String.valueOf(Genre.FANTASY);
+                                    break;
+                                case 2:
+                                    genre = String.valueOf(Genre.ROMANCE);
+                                    break;
+                                case 3:
+                                    genre = String.valueOf(Genre.SCI_FI);
+                                    break;
+                                case 4:
+                                    genre = String.valueOf(Genre.MYSTERY);
+                                    break;
+                                case 5:
+                                    genre = String.valueOf(Genre.HORROR);
+                                    break;
+                                case 6:
+                                    genre = String.valueOf(Genre.POETRY);
+                                    break;
+                                case 7:
+                                    continue;
+                            }
                             BookDAO.ReadGenre(genre);
                             break;
                         case 4:
@@ -108,8 +131,30 @@ public class Main {
                     String title = read.nextLine();
                     System.out.println("Write the book author:");
                     String author = read.nextLine();
-                    System.out.println("Write the book genre:");
-                    String genre = read.nextLine();
+                    System.out.println("Please enter the genre:\n1. Fantasy\n2. Romance\n3. Science Fiction.\n4. Mystery.\n5. Horror.\n6. Poetry.\n7. Return.");
+                    String genre = "";
+                    switch (read.nextInt()) {
+                        case 1:
+                            genre = String.valueOf(Genre.FANTASY);
+                            break;
+                        case 2:
+                            genre = String.valueOf(Genre.ROMANCE);
+                            break;
+                        case 3:
+                            genre = String.valueOf(Genre.SCI_FI);
+                            break;
+                        case 4:
+                            genre = String.valueOf(Genre.MYSTERY);
+                            break;
+                        case 5:
+                            genre = String.valueOf(Genre.HORROR);
+                            break;
+                        case 6:
+                            genre = String.valueOf(Genre.POETRY);
+                            break;
+                        case 7:
+                            continue;
+                    }
                     System.out.println("Write how many units of the book will be added:");
                     int units = read.nextInt();
                     Book b = new Book(title,author,genre,units);
