@@ -1,7 +1,6 @@
 package DB.OP;
 import  DB.DataConnection;
 import java.sql.*;
-import Code.Book;
 
 public class LentDAO {
     public static void Insert_person(String book,String name){

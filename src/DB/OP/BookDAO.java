@@ -73,7 +73,7 @@ public class BookDAO {
     }
 
     public static void ReadAuthor(String s){
-        String search_author = "SELECT * FROM library WHERE author ILIKE ? ORDER BY id ASC";
+        String search_author = "SELECT * FROM library WHERE author ILIKE ?";
 
         try (Connection conn = DataConnection.getConnection();
              PreparedStatement di = conn.prepareStatement(search_author);
