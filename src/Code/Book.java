@@ -7,6 +7,14 @@ public class Book {
     private String genre;
     private int availability;
 
+    public Book(int id,String title, String author, String genre, int availability) {
+        this.id=id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.availability = availability;
+    }
+
     public Book(String title, String author, String genre, int availability) {
         this.title = title;
         this.author = author;
@@ -34,5 +42,8 @@ public class Book {
         return availability;
     }
 
-
+    @Override
+    public String toString(){
+        return "|   "+id+"   |   "+title+"   |   "+author+"   |   "+genre+"   |  "+availability+"   |";
+    }
 }
