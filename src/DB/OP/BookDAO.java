@@ -99,6 +99,45 @@ public class BookDAO {
         return genre;
     }
 
+    public static void insertBook(Book b){
+        String add_Book="INSERT INTO Library (Book,Author,Genre,Units_Available) values(?,?,?,?)";
+
+        try (Connection conn = DataConnection.getConnection();
+             PreparedStatement di = conn.prepareStatement(add_Book);
+        ){
+            di.setString(1, b.getTitle());
+            di.setString(2, b.getAuthor());
+            di.setString(3,b.getGenre());
+            di.setInt(4,b.getAvailability());
+            di.executeUpdate();
+
+            System.out.println("Added correctly");
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Error: "+e.getMessage());
+        }
+    }
+
+    public static Book getById(int id){
+        String add_Book="SELECT * FROM Library WHERE id=?";
+
+        Book b =null;
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement gi = conn.prepareStatement(add_Book)
+        ) {
+            gi.setInt(1, id);
+            ResultSet rs = gi.executeQuery();
+            if (rs.next()) {
+                b = new Book(rs.getInt("id"), rs.getString("book"), rs.getString("author"), rs.getString("genre"), rs.getInt("units_available"));
+            }
+        }
+        catch (SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+        return b;
+    }
+
     public static void LendBook(int i,String name){
         String search_id = "SELECT * FROM library WHERE id = ?";
         String lend = "UPDATE library set units_available = ? WHERE id = ?";
@@ -155,25 +194,6 @@ public class BookDAO {
 
         }
         catch(Exception e){
-            System.err.println("Error: "+e.getMessage());
-        }
-    }
-    public static void InsertBook(Book b){
-        String add_Book="INSERT INTO Library (Book,Author,Genre,Units_Available) values(?,?,?,?)";
-
-        try (Connection conn = DataConnection.getConnection();
-             PreparedStatement di = conn.prepareStatement(add_Book);
-        ){
-            di.setString(1, b.getTitle());
-            di.setString(2, b.getAuthor());
-            di.setString(3,b.getGenre());
-            di.setInt(4,b.getAvailability());
-            di.executeUpdate();
-
-            System.out.println("Added correctly");
-        }
-        catch (SQLException e)
-        {
             System.err.println("Error: "+e.getMessage());
         }
     }
