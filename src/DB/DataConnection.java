@@ -1,14 +1,20 @@
 package DB;
 
+
+import com.github.shyiko.dotenv.DotEnv;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.DriverManager;
+import java.util.Map;
+
 public class DataConnection {
-    private static final String KEY="npg_Pi15oQsUerOB";
-    private static final String USER="neondb_owner";
-    private static final String URL="jdbc:postgresql://ep-dawn-feather-aphaq3sf-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channelBinding=require";
+    private static final Map<String, String> dotenv = DotEnv.load();
 
     public static Connection getConnection() throws SQLException{
+        String URL = dotenv.get("DB_URL");
+        String USER = dotenv.get("DB_USER");
+        String KEY = dotenv.get("DB_KEY");
         return DriverManager.getConnection(URL,USER,KEY);
     }
 }
