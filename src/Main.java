@@ -200,7 +200,6 @@ public class Main {
                             break;
                         case 3:
                             read.nextLine();
-                            System.out.println("Please enter the genre:");
                             System.out.println("Please enter the genre:\n1. Fantasy\n2. Romance\n3. Science Fiction.\n4. Mystery.\n5. Horror.\n6. Poetry.\n7. Return.");
                             genre = "";
                             switch (read.nextInt()) {
@@ -225,6 +224,7 @@ public class Main {
                                 case 7:
                                     continue;
                             }
+                            read.nextLine();
                             BookDAO.ReadGenre(genre);
                             break;
                         case 4:
