@@ -1,4 +1,5 @@
 package DB.OP;
+import Code.Lent_Book;
 import  DB.DataConnection;
 import java.sql.*;
 import Code.Book;
@@ -138,7 +139,7 @@ public class BookDAO {
         return b;
     }
 
-    public static void LendBook(int i,String name){
+    public static void lendBook(int i,String name){
         String search_id = "SELECT * FROM library WHERE id = ?";
         String lend = "UPDATE library set units_available = ? WHERE id = ?";
 
@@ -154,6 +155,7 @@ public class BookDAO {
             }
 
             int ua = rs.getInt("units_available");
+
             if(ua==0){
                 System.out.println("There are no units available");
                 return;
@@ -164,7 +166,8 @@ public class BookDAO {
             ld.setInt(2,i);
             ld.executeUpdate();
             String book=rs.getString("book");
-            LentDAO.Insert_person(book,name);
+            Lent_Book lb = new Lent_Book(book,name);
+            LentDAO.insert_person(lb);
             System.out.println("The action was performed successfully. Units available of "+book+": "+ua);
         }
 

@@ -1,22 +1,28 @@
 package DB.OP;
+import Code.Lent_Book;
 import  DB.DataConnection;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LentDAO {
-    public static void Insert_person(String book,String name){
+    public static void insert_person(Lent_Book lb){
         String add_person="INSERT INTO lent_books (book,person) VALUES (?,?)";
 
         try(Connection conn = DataConnection.getConnection();
             PreparedStatement ip = conn.prepareStatement(add_person)){
-            ip.setString(1,book);
-            ip.setString(2,name);
+            ip.setString(1,lb.getBook());
+            ip.setString(2, lb.getPerson());
             ip.executeUpdate();
+
         } catch (SQLException e) {
             System.err.println("Error: "+e.getMessage());
         }
+
     }
 
-    public static void ReturnBook(String name){
+    public static List<Lent_Book> returnBook(String name){
+        List<Lent_Book> lentb = new ArrayList<>();
         String search_person = "SELECT * FROM lent_books WHERE person ILIKE ?";
 
         try(Connection conn = DataConnection.getConnection();
@@ -26,16 +32,15 @@ public class LentDAO {
             ResultSet rs = sp.executeQuery();
             System.out.println("|   ID  |   NAME    |   BOOK    |   DATE    |");
             while(rs.next()){
-                int id = rs.getInt("id");
-                String pname = rs.getString("person");
-                String book = rs.getString("book");
-                String date = rs.getString("date");
-                System.out.println("|   "+id+"  |   "+pname+"   |   "+book+"    |   "+date+"    |   ");
+                Lent_Book lb = new Lent_Book(rs.getInt("id"),rs.getString("person"),rs.getString("book"),rs.getTimestamp("date"));
+                lentb.add(lb);
             }
         }
         catch (SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
+
+        return lentb;
     }
 
     public static void Delete_person(int id){
@@ -65,23 +70,23 @@ public class LentDAO {
 
     }
 
-    public static void Read_lent(){
+    public static List<Lent_Book> readAll(){
+        List <Lent_Book> lentb = new ArrayList<>();
+
         String search_book = "SELECT * FROM lent_books";
         try(Connection conn = DataConnection.getConnection();
             PreparedStatement rl = conn.prepareStatement(search_book) ;
             ResultSet rs = rl.executeQuery()
         ){
-            System.out.println("|       BOOK       |       PERSON       |       DATE        |");
             while(rs.next()){
-                String book = rs.getString("book");
-                String person = rs.getString("person");
-                String date = rs.getString("date");
-                System.out.println("|"+book+"   |"+person+"   |"+date+"   |");
+                Lent_Book lb = new Lent_Book(rs.getInt("id"),rs.getString("person"),rs.getString("book"),rs.getTimestamp("date"));
+                lentb.add(lb);
             }
         }
         catch (SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
+        return lentb;
 
     }
 }

@@ -15,7 +15,7 @@ public class Lent_Book {
         return book;
     }
 
-    public String getperson(){
+    public String getPerson(){
         return person;
     }
 
