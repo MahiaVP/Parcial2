@@ -13,7 +13,7 @@ public class Main {
         System.out.println("Library System\n");
         do {
             System.out.println("Type the number of the action you want to perform:\n");
-            System.out.println("1. See all books in the library.\n2. Filter by category and check availability.\n3. Lend a book\n4. Return a book\n5. Add a book to the system.\n6. Find location of a book.\n7. See list of books lent.\n8. Exit\n");
+            System.out.println("1. See all books in the library.\n2. Filter by category and check availability.\n3. Lend a book\n4. Return a book\n5. Add a book to the system.\n6. Find location of a book.\n7. See list of books lent.\n8. See list of locations\n9. Exit\n");
             switch (read.nextInt()) {
                 case 1:
                     BookDAO.ReadBook();
@@ -68,8 +68,11 @@ public class Main {
                     break;
                 case 3:
                     read.nextLine();
-                    System.out.println("Please type the person's name");
-                    String name=read.nextLine();
+                    System.out.println("Write the person's name or type 0 to quit");
+                    String name = read.nextLine();
+                    if(name.equals("0")) {
+                        break;
+                    }
                     System.out.println("How would you like to search the book?\n1. Title\n2. Author\n3. Genre\n4. Return.");
                     switch (read.nextInt()) {
                         case 1:
@@ -121,17 +124,31 @@ public class Main {
                     break;
                 case 4:
                     read.nextLine();
-                    System.out.println("Write the person's name");
-                    LentDAO.ReturnBook(read.nextLine());
-                    System.out.println("Type the person's id");
-                    LentDAO.Delete_person(read.nextInt());
+                    System.out.println("Write the person's name or type 0 to quit");
+                    String var = read.nextLine();
+                    if(var.equals("0")) {
+                        break;
+                    }
+                    LentDAO.ReturnBook(var);
+                    System.out.println("Type the person's id or type X to quit.");
+                    String id = read.nextLine();
+                    if(id.equalsIgnoreCase("X")) {
+                        break;
+                    }
+                    LentDAO.Delete_person(Integer.parseInt(id));
                     break;
                 case 5:
                     read.nextLine();
-                    System.out.println("Write the book title:");
+                    System.out.println("Write the book title or type 0 to quit:");
                     String title = read.nextLine();
-                    System.out.println("Write the book author:");
+                    if(title.equals("0")) {
+                        break;
+                    }
+                    System.out.println("Write the book author or type 0 to quit:");
                     String author = read.nextLine();
+                    if(author.equals("0")) {
+                        break;
+                    }
                     System.out.println("Please enter the genre:\n1. Fantasy\n2. Romance\n3. Science Fiction.\n4. Mystery.\n5. Horror.\n6. Poetry.\n7. Return.");
                     String genre = "";
                     switch (read.nextInt()) {
@@ -156,9 +173,13 @@ public class Main {
                         case 7:
                             continue;
                     }
-                    System.out.println("Write how many units of the book will be added:");
-                    int units = read.nextInt();
-                    Book b = new Book(title,author,genre,units);
+                    read.nextLine();
+                    System.out.println("Write how many units of the book will be added or type X to quit:");
+                    String unit = read.nextLine();
+                    if(unit.equalsIgnoreCase("X")) {
+                        break;
+                    }
+                    Book b = new Book(title,author,genre,Integer.parseInt(unit));
                     BookDAO.InsertBook(b);
                     break;
                 case 6:
@@ -209,12 +230,28 @@ public class Main {
                         case 4:
                             continue;
                     }
-                    System.out.println("Write the book id");
-                    LocationDAO.find_title(read.nextInt());
+                    System.out.println("Write the book id or type X to quit:");
+                    String t=read.nextLine();
+                    if(t.equalsIgnoreCase("X")) {
+                        break;
+                    }
+                    LocationDAO.find_title(Integer.parseInt(t));
                     break;
+                case 7:
+                    read.nextLine();
+                    LentDAO.Read_lent();
+                    break;
+                case 8:
+                    read.nextLine();
+                    LocationDAO.Read_Location();
+                    break;
+                case 9:
+                    read.nextLine();
+                    System.out.println("Are you sure you want to quit?");
+
             }
-                    System.out.println("1. Return\n2. Exit\n");
-                    k = read.nextInt();
+            System.out.println("1. Return\n2. Exit\n");
+            k = read.nextInt();
         }while (k == 1) ;
     }
 }

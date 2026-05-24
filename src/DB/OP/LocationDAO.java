@@ -87,4 +87,26 @@ public class LocationDAO {
             System.err.println("Error: "+e.getMessage());
         }
     }
+
+    public static void Read_Location() {
+        String find="SELECT * FROM location";
+
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement rl = conn.prepareStatement(find);
+            ResultSet rs = rl.executeQuery();
+        ){
+            System.out.println("|   BOOK    |   AUTHOR  |   SECTION   |     ROW     |");
+            while(rs.next()){
+                String book=rs.getString("book");
+                String author=rs.getString("author");
+                String section=rs.getString("section");
+                int row=rs.getInt("row");
+
+                System.out.println("| "+book+" | "+author+" | "+section+" | "+row);
+            }
+        }
+        catch(SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+    }
 }

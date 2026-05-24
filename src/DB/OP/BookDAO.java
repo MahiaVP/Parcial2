@@ -54,7 +54,10 @@ public class BookDAO {
         ){
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
-
+            if(!rs.next()){
+                System.out.println("!! Title Not Found !!");
+                return;
+            }
             System.out.println("|   ID  |   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
             while(rs.next()){
                 int id = rs.getInt("id");
@@ -80,6 +83,11 @@ public class BookDAO {
         ){
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
+
+            if(!rs.next()){
+                System.out.println("!! Author Not Found !!");
+                return;
+            }
 
             System.out.println("|   ID  |   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
             while(rs.next()){

@@ -64,4 +64,24 @@ public class LentDAO {
         }
 
     }
+
+    public static void Read_lent(){
+        String search_book = "SELECT * FROM lent_books";
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement rl = conn.prepareStatement(search_book) ;
+            ResultSet rs = rl.executeQuery()
+        ){
+            System.out.println("|       BOOK       |       PERSON       |       DATE        |");
+            while(rs.next()){
+                String book = rs.getString("book");
+                String person = rs.getString("person");
+                String date = rs.getString("date");
+                System.out.println("|"+book+"   |"+person+"   |"+date+"   |");
+            }
+        }
+        catch (SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+
+    }
 }
