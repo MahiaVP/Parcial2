@@ -4,21 +4,22 @@ import DB.OP.Genre;
 import DB.OP.LentDAO;
 import DB.OP.LocationDAO;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int k = 1;
         Scanner read = new Scanner(System.in);
         System.out.println("Library System\n");
+        int k=0;
         do {
             System.out.println("Type the number of the action you want to perform:\n");
             System.out.println("1. Library module.\n2. Lending module.\n3. Location module.\n4. Exit");
-            switch (read.nextInt()) {
+            k= read.nextInt();
+            switch (k) {
                 case 1:
                     read.nextLine();
                     System.out.println("1. See all books in the library.\n2. Filter by category and check availability.\n3. Add a book to the system.\n4. Search a book with id.\n5. Return");
+
                     switch (read.nextInt()) {
                         case 1:
                             List<Book> books = BookDAO.getAllBooks();
@@ -33,14 +34,29 @@ public class Main {
                             switch (read.nextInt()) {
                                 case 1:
                                     read.nextLine();
-                                    System.out.println("Please enter the title:");
-                                    List<Book> title = BookDAO.getByTitle(read.nextLine());
+                                    System.out.println("Please enter the title or type 0 to quit:");
+                                    String title = read.nextLine();
+                                    if (title.equals("0")) {
+                                        return;
+                                    }
+                                    List<Book> tle = BookDAO.getByTitle(title);
+                                    System.out.println("|   id   |         Book         |   Author   |   Genre   |   Units Available   |");
+                                    for (Book book : tle) {
+                                        System.out.println(book);
+                                    }
                                     break;
                                 case 2:
                                     read.nextLine();
-                                    System.out.println("Please enter the author:");
+                                    System.out.println("Please enter the author or type 0 to quit:");
                                     String author = read.nextLine();
-                                    BookDAO.ReadAuthor(author);
+                                    if (author.equals("0")) {
+                                        return;
+                                    }
+                                    List<Book> aut = BookDAO.getByAuthor(read.nextLine());
+                                    System.out.println("|   id   |         Book         |   Author   |   Genre   |   Units Available   |");
+                                    for (Book book : aut) {
+                                        System.out.println(book);
+                                    }
                                     break;
                                 case 3:
                                     read.nextLine();
@@ -68,15 +84,22 @@ public class Main {
                                         case 7:
                                             continue;
                                     }
-                                    BookDAO.ReadGenre(genre);
+                                    List<Book> gen = BookDAO.getByGenre(genre);
+                                    System.out.println("|   id   |         Book         |   Author   |   Genre   |   Units Available   |");
+                                    for (Book book : gen) {
+                                        System.out.println(book);
+                                    }
                                     break;
                                 case 4:
                                     continue;
                             }
                             break;
+                        case 3:
+                            read.nextLine();
+
                     }
             }
-            System.out.println("1. See all books in the library.\n2. Filter by category and check availability.\n3. Lend a book\n4. Return a book\n5. Add a book to the system.\n6. Find location of a book.\n7. See list of books lent.\n8. See list of locations\n9. Exit\n");
+            System.out.println("3. Lend a book\n4. Return a book\n5. Add a book to the system.\n6. Find location of a book.\n7. See list of books lent.\n8. See list of locations\n9. Exit\n");
             switch (read.nextInt()) {
                 case 1:
                     break;
@@ -94,7 +117,7 @@ public class Main {
                             read.nextLine();
                             System.out.println("Please enter the author:");
                             String author = read.nextLine();
-                            BookDAO.ReadAuthor(author);
+                            BookDAO.getByAuthor(author);
                             break;
                         case 3:
                             read.nextLine();
@@ -122,7 +145,7 @@ public class Main {
                                 case 7:
                                     continue;
                             }
-                            BookDAO.ReadGenre(genre);
+                            BookDAO.getByGenre(genre);
                             break;
                         case 4:
                             continue;
@@ -147,7 +170,7 @@ public class Main {
                             read.nextLine();
                             System.out.println("Please enter the author:");
                             String author = read.nextLine();
-                            BookDAO.ReadAuthor(author);
+                            BookDAO.getByAuthor(author);
                             break;
                         case 3:
                             read.nextLine();
@@ -176,7 +199,7 @@ public class Main {
                                 case 7:
                                     continue;
                             }
-                            BookDAO.ReadGenre(genre);
+                            BookDAO.getByGenre(genre);
                             break;
                         case 4:
                             continue;
@@ -258,7 +281,7 @@ public class Main {
                             read.nextLine();
                             System.out.println("Please enter the author:");
                             author = read.nextLine();
-                            BookDAO.ReadAuthor(author);
+                            BookDAO.getByAuthor(author);
                             break;
                         case 3:
                             read.nextLine();
@@ -287,7 +310,7 @@ public class Main {
                                     continue;
                             }
                             read.nextLine();
-                            BookDAO.ReadGenre(genre);
+                            BookDAO.getByGenre(genre);
                             break;
                         case 4:
                             continue;
@@ -309,11 +332,8 @@ public class Main {
                     break;
                 case 9:
                     read.nextLine();
-                    System.out.println("Are you sure you want to quit?");
 
             }
-            System.out.println("1. Return\n2. Exit\n");
-            k = read.nextInt();
-        }while (k == 1) ;
+        }while (k != 4) ;
     }
 }

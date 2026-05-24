@@ -34,15 +34,14 @@ public class BookDAO {
         try (Connection conn = DataConnection.getConnection();
             PreparedStatement di = conn.prepareStatement(search_title);
         ){
-            di.setString(1,s);
+            di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
-            if(!rs.next()){
-                System.out.println("!! Title Not Found !!");
-            }else{
-                while(rs.next()){
-                    Book b = new Book(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("genre"),rs.getInt("units_available"));
-                    title.add(b);
-                }
+            while(rs.next()){
+                Book b = new Book(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("genre"),rs.getInt("units_available"));
+                title.add(b);
+            }
+            if(title.isEmpty()){
+                System.out.println("!! TITLE NOT FOUND !!");
             }
         }
         catch(Exception e){
@@ -51,7 +50,9 @@ public class BookDAO {
         return title;
     }
 
-    public static void ReadAuthor(String s){
+    public static List <Book> getByAuthor(String s){
+        List<Book> author = new ArrayList<>();
+
         String search_author = "SELECT * FROM library WHERE author ILIKE ?";
 
         try (Connection conn = DataConnection.getConnection();
@@ -60,29 +61,25 @@ public class BookDAO {
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
 
-            if(!rs.next()){
-                System.out.println("!! Author Not Found !!");
-                return;
-            }
-
-            System.out.println("|   ID  |   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
             while(rs.next()){
-                int id = rs.getInt("id");
-                String book = rs.getString("book");
-                String author = rs.getString("author");
-                String genre = rs.getString("genre");
-                int u_a = rs.getInt("units_available");
-
-                System.out.println("|  "+id + "  |  " + book + "   |   " + author + "  |  " + genre + "  |  " + u_a +"  |");
+                Book b = new Book(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("genre"),rs.getInt("units_available"));
+                author.add(b);
+            }
+            if(author.isEmpty()){
+                System.out.println("!! AUTHOR NOT FOUND !!");
             }
         }
 
         catch(Exception e){
             System.err.println("Error: "+e.getMessage());
         }
+
+        return author;
     }
 
-    public static void ReadGenre(String s){
+    public static List<Book> getByGenre(String s){
+        List<Book> genre = new ArrayList<>();
+
         String search_genre = "SELECT * FROM library WHERE genre = ? ORDER BY id ASC";
 
         try (Connection conn = DataConnection.getConnection();
@@ -91,21 +88,15 @@ public class BookDAO {
             di.setString(1,s);
             ResultSet rs = di.executeQuery();
 
-            System.out.println("|   ID  |   BOOK    |   AUTHOR  |   GENRE   |   UNITS AVAILABLE |");
             while(rs.next()){
-                int id = rs.getInt("id");
-                String book = rs.getString("book");
-                String author = rs.getString("author");
-                String genre = rs.getString("genre");
-                int u_a = rs.getInt("units_available");
-
-                System.out.println("|  "+id + "  |  " + book + "   |   " + author + "  |  " + genre + "  |  " + u_a +"  |");
+                Book b = new Book(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("genre"),rs.getInt("units_available"));
+                genre.add(b);
             }
         }
-
         catch(Exception e){
             System.err.println("Error: "+e.getMessage());
         }
+        return genre;
     }
 
     public static void LendBook(int i,String name){
