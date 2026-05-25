@@ -15,7 +15,7 @@ public class LocationDAO {
             PreparedStatement fi = conn.prepareStatement(find);
             PreparedStatement st=conn.prepareStatement(search);
             PreparedStatement il=conn.prepareStatement(Update);
-            PreparedStatement paf=conn.prepareStatement(ait);
+            PreparedStatement paf=conn.prepareStatement(ait)
         ){
             fi.setInt(1, id);
             ResultSet rs=fi.executeQuery();
@@ -89,7 +89,7 @@ public class LocationDAO {
 
         try(Connection conn = DataConnection.getConnection();
             PreparedStatement rl = conn.prepareStatement(find);
-            ResultSet rs = rl.executeQuery();
+            ResultSet rs = rl.executeQuery()
         ){
             System.out.println("|   BOOK    |   AUTHOR  |   SECTION   |     ROW     |");
             while(rs.next()){

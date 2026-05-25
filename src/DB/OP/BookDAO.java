@@ -33,7 +33,7 @@ public class BookDAO {
         String search_title = "SELECT * FROM library WHERE book ILIKE ? ORDER BY id ASC";
 
         try (Connection conn = DataConnection.getConnection();
-            PreparedStatement di = conn.prepareStatement(search_title);
+            PreparedStatement di = conn.prepareStatement(search_title)
         ){
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
@@ -57,7 +57,7 @@ public class BookDAO {
         String search_author = "SELECT * FROM library WHERE author ILIKE ?";
 
         try (Connection conn = DataConnection.getConnection();
-             PreparedStatement di = conn.prepareStatement(search_author);
+             PreparedStatement di = conn.prepareStatement(search_author)
         ){
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
@@ -84,7 +84,7 @@ public class BookDAO {
         String search_genre = "SELECT * FROM library WHERE genre = ? ORDER BY id ASC";
 
         try (Connection conn = DataConnection.getConnection();
-             PreparedStatement di = conn.prepareStatement(search_genre);
+             PreparedStatement di = conn.prepareStatement(search_genre)
         ){
             di.setString(1,s);
             ResultSet rs = di.executeQuery();
@@ -104,7 +104,7 @@ public class BookDAO {
         String add_Book="INSERT INTO Library (Book,Author,Genre,Units_Available) values(?,?,?,?)";
 
         try (Connection conn = DataConnection.getConnection();
-             PreparedStatement di = conn.prepareStatement(add_Book);
+             PreparedStatement di = conn.prepareStatement(add_Book)
         ){
             di.setString(1, b.getTitle());
             di.setString(2, b.getAuthor());
@@ -145,7 +145,7 @@ public class BookDAO {
 
         try (Connection conn = DataConnection.getConnection();
              PreparedStatement di = conn.prepareStatement(search_id);
-             PreparedStatement ld = conn.prepareStatement(lend);
+             PreparedStatement ld = conn.prepareStatement(lend)
         ){
             di.setInt(1,i);
             ResultSet rs = di.executeQuery();
@@ -182,7 +182,7 @@ public class BookDAO {
 
         try(Connection conn=DataConnection.getConnection();
             PreparedStatement sb = conn.prepareStatement(search_book);
-            PreparedStatement rb = conn.prepareStatement(update);
+            PreparedStatement rb = conn.prepareStatement(update)
         ){
             sb.setString(1,book);
             ResultSet rs = sb.executeQuery();
@@ -200,6 +200,4 @@ public class BookDAO {
             System.err.println("Error: "+e.getMessage());
         }
     }
-
-
 }

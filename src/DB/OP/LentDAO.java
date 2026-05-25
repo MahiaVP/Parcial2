@@ -26,7 +26,7 @@ public class LentDAO {
         String search_person = "SELECT * FROM lent_books WHERE person ILIKE ?";
 
         try(Connection conn = DataConnection.getConnection();
-            PreparedStatement sp = conn.prepareStatement(search_person);
+            PreparedStatement sp = conn.prepareStatement(search_person)
         ){
             sp.setString(1,"%"+name+"%");
             ResultSet rs = sp.executeQuery();
@@ -49,7 +49,7 @@ public class LentDAO {
 
         try(Connection conn=DataConnection.getConnection();
             PreparedStatement sp = conn.prepareStatement(search_book);
-            PreparedStatement dp = conn.prepareStatement(delete_person);
+            PreparedStatement dp = conn.prepareStatement(delete_person)
 
         ){
             sp.setInt(1,id);
