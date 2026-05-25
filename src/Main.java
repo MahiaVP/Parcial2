@@ -159,7 +159,7 @@ public class Main {
                                 System.out.println(bid);
                                 break;
                             case 5:
-                                continue;
+                                break;
                         }
                     }while (l != 5);
 
@@ -322,11 +322,11 @@ public class Main {
 
                 case 3://Location module
                     read.nextLine();
-                    int n = 0;
+                    int n;
                     do{
                         System.out.println("    *| LOCATION MODULE |*   ");
                         System.out.println("1. Find location of a book.\n2. Search by filter.\n3. See all.\n4. Search by id.\n5. Return");
-                        read.nextInt(n);
+                        n=read.nextInt();
                         switch (n) {
                             case 1:
                                 read.nextLine();
@@ -374,7 +374,7 @@ public class Main {
                                                 genre = String.valueOf(Genre.POETRY);
                                                 break;
                                             case 7:
-                                                continue;
+                                                break;
                                         }
                                         read.nextLine();
                                         List<Book> book = BookDAO.getByGenre(genre);
@@ -383,7 +383,7 @@ public class Main {
                                         }
                                         break;
                                     case 4:
-                                        continue;
+                                        break;
                                 }
                                 System.out.println("Write the book id or type X to quit:");
                                 String t=read.nextLine();
@@ -395,9 +395,79 @@ public class Main {
                                 break;
                             case 2:
                                 read.nextLine();
+                                System.out.println("1. Book.\n2. Author.\n3. Section.\n4. Row.\n5. Return");
+                                switch (read.nextInt()) {
+                                    case 1:
+                                        read.nextLine();
+                                        System.out.println("Please enter the title or type 0 to quit:");
+                                        String title = read.nextLine();
+                                        if (title.equals("0")) {
+                                            break;
+                                        }
+                                        List<Location> lc = LocationDAO.findByTitle(title);
+                                        for (Location loc2 : lc) {
+                                            System.out.println(loc2);
+                                        }
+                                        break;
+                                    case 2:
+                                        read.nextLine();
+                                        System.out.println("Please enter the author or type 0 to quit:");
+                                        String author = read.nextLine();
+                                        if (author.equals("0")) {
+                                            break;
+                                        }
+                                        List<Location> au = LocationDAO.findByAuthor(author);
+                                        for (Location auth : au) {
+                                            System.out.println(auth);
+                                        }
+                                        break;
+                                    case 3:
+                                        read.nextLine();
+                                        System.out.println("Please enter the section (A-F) or type 0 to quit:");
+                                        String section = read.nextLine();
+                                        if (section.equals("0")) {
+                                            break;
+                                        }
+                                        List<Location> sec = LocationDAO.findBySection(section);
+                                        for (Location st : sec) {
+                                            System.out.println(st);
+                                        }
+                                        break;
+                                    case 4:
+                                        read.nextLine();
+                                        System.out.println("Please enter the row (1-4) or type X to quit:");
+                                        String row = read.nextLine();
+                                        if (row.equalsIgnoreCase("X")) {
+                                            break;
+                                        } else if (Integer.parseInt(row) > 4) {
+                                            System.out.println("!! ROW NOT VALID !!");
+                                            break;
+                                        }
+                                        List<Location> rw = LocationDAO.findByRow(Integer.parseInt(row));
+                                        for (Location rOw : rw) {
+                                            System.out.println(rOw);
+                                        }
+                                        break;
+                                    case 5:
+                                        break;
+                                }
+                                break;
+                            case 3:
+                                read.nextLine();
+                                List<Location> all = LocationDAO.getAllLocation();
+                                for(Location loc2 : all) {
+                                    System.out.println(loc2);
+                                }
+                            case 4:
+                                read.nextLine();
+                                System.out.println("Please type the ID:");
+                                Location location = LentDAO.getById(read.nextInt());
+                                System.out.println(location);
                         }
+                        break;
+                    }while (n != 5);
+                case 4:
                     break;
-                }while (n!=5);
             }
         }while (k != 4) ;
     }

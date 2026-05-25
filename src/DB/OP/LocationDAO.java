@@ -2,6 +2,8 @@ package DB.OP;
 import Code.Location;
 import DB.DataConnection;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class LocationDAO {
@@ -84,22 +86,112 @@ public class LocationDAO {
         return loc1;
     }
 
-    public static void getAllLocation() {
+    public static List<Location> findByTitle(String title) {
+        List<Location> loc=new ArrayList<>();
+        String find="SELECT * FROM location WHERE book ILIKE ?";
+
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement fbt = conn.prepareStatement(find)){
+            fbt.setString(1, "%"+title+"%");
+            ResultSet rs=fbt.executeQuery();
+            while(rs.next()){
+                Location lc =  new Location(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("section"),rs.getInt("row"));
+                loc.add(lc);
+            }
+        }
+        catch(SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+        return loc;
+    }
+
+    public static List<Location> findByAuthor(String author) {
+        List<Location> au=new ArrayList<>();
+        String find="SELECT * FROM location WHERE author ILIKE ?";
+
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement fbt = conn.prepareStatement(find)){
+            fbt.setString(1, "%"+author+"%");
+            ResultSet rs=fbt.executeQuery();
+            while(rs.next()){
+                Location aut =  new Location(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("section"),rs.getInt("row"));
+                au.add(aut);
+            }
+        }
+        catch(SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+        return au;
+    }
+
+    public static List<Location> findBySection(String section) {
+        List<Location> sec=new ArrayList<>();
+        String find="SELECT * FROM location WHERE section ILIKE ?";
+
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement fbs = conn.prepareStatement(find)
+        ){
+           fbs.setString(1, "%"+section+"%");
+           ResultSet rs=fbs.executeQuery();
+           while(rs.next()){
+               Location sc= new Location(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("section"),rs.getInt("row"));
+               sec.add(sc);
+           }
+        }
+        catch(SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+        return sec;
+    }
+
+    public static List<Location> findByRow(int row) {
+        List<Location> rw=new ArrayList<>();
+
+        String find="SELECT * FROM location WHERE row = ?";
+
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement fbr = conn.prepareStatement(find)
+        ){
+            fbr.setInt(1,row);
+            ResultSet rs=fbr.executeQuery();
+            while(rs.next()){
+                Location rOw = new Location(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("section"),rs.getInt("row"));
+                rw.add(rOw);
+            }
+        }
+        catch(SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+        return rw;
+    }
+
+    public static List<Location> getAllLocation() {
+        List<Location> all=new ArrayList<>();
+
         String find="SELECT * FROM location";
 
         try(Connection conn = DataConnection.getConnection();
             PreparedStatement rl = conn.prepareStatement(find);
             ResultSet rs = rl.executeQuery()
         ){
-            System.out.println("|   BOOK    |   AUTHOR  |   SECTION   |     ROW     |");
             while(rs.next()){
-                String book=rs.getString("book");
-                String author=rs.getString("author");
-                String section=rs.getString("section");
-                int row=rs.getInt("row");
-
-                System.out.println("| "+book+" | "+author+" | "+section+" | "+row);
+                Location eve = new Location(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("section"),rs.getInt("row"));
+                all.add(eve);
             }
+        }
+        catch(SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+        return all;
+    }
+
+    public static Location getLocationById(int id) {
+        String find="SELECT * FROM location WHERE id = ?";
+
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement gli= conn.prepareStatement(find)
+        ){
+
         }
         catch(SQLException e){
             System.err.println("Error: "+e.getMessage());

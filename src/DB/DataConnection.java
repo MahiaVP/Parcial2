@@ -1,8 +1,6 @@
 package DB;
 
-
 import com.github.shyiko.dotenv.DotEnv;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.DriverManager;
