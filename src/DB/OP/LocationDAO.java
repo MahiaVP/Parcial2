@@ -1,15 +1,16 @@
 package DB.OP;
+import Code.Location;
 import DB.DataConnection;
 import java.sql.*;
 
 
 public class LocationDAO {
-    public static void find_title(int id) {
+    public static Location find_title(int id) {
         String find="SELECT * FROM library WHERE id = ?";
         String search="SELECT * FROM location WHERE book = ?";
         String Update="INSERT INTO location (book,author,section,row) VALUES (?,?,?,?)";
         String ait="SELECT * FROM location WHERE book = ?";
-
+        Location loc1 = null;
         try(Connection conn= DataConnection.getConnection();
             PreparedStatement fi = conn.prepareStatement(find);
             PreparedStatement st=conn.prepareStatement(search);
@@ -66,29 +67,24 @@ public class LocationDAO {
                 il.setString(3, section);
                 il.setInt(4, row);
                 il.executeUpdate();
-                System.out.println(book+" by "+author+" is at section "+section+" row "+row);
+                Location loc = new Location(book,author,section,row);
+                System.out.println("\n!! If the book was not previously registered the ID will appear as 0 even though it is not really 0, search it again to see the id !!\n");
+                return loc;
             }else{
                 paf.setString(1, book);
                 ResultSet fb=paf.executeQuery();
                 if(fb.next()){
-                    String book1=fb.getString("book");
-                    String author1=fb.getString("author");
-                    String section1=fb.getString("section");
-                    int row1=fb.getInt("row");
-
-                    System.out.println(book+" by "+author1+" is at section "+section1+" row "+row1);
+                    loc1=new Location(fb.getInt("id"),fb.getString("book"),fb.getString("author"),fb.getString("section"),fb.getInt("row"));
                 }
-
             }
-
         }
-
         catch(SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
+        return loc1;
     }
 
-    public static void Read_Location() {
+    public static void getAllLocation() {
         String find="SELECT * FROM location";
 
         try(Connection conn = DataConnection.getConnection();

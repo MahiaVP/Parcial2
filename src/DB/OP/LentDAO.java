@@ -87,6 +87,65 @@ public class LentDAO {
             System.err.println("Error: "+e.getMessage());
         }
         return lentb;
+    }
 
+    public static List<Lent_Book> getByTitle(String title){
+        List<Lent_Book> lentb = new ArrayList<>();
+
+        String search_book = "SELECT * FROM lent_books WHERE book ILIKE ?";
+
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement gbt = conn.prepareStatement(search_book)
+        ){
+            gbt.setString(1, "%"+title+"%");
+            ResultSet rs = gbt.executeQuery();
+            while(rs.next()){
+                Lent_Book lb = new Lent_Book(rs.getInt("id"),rs.getString("person"),rs.getString("book"),rs.getTimestamp("date"));
+                lentb.add(lb);
+            }
+        }
+        catch (SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+        return lentb;
+    }
+
+    public static List<Lent_Book> getByPerson(String author){
+        List<Lent_Book> lentb = new ArrayList<>();
+        String search_book = "SELECT * FROM lent_books WHERE person ILIKE ?";
+
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement gba = conn.prepareStatement(search_book)
+        ){
+            gba.setString(1, "%"+author+"%");
+            ResultSet rs = gba.executeQuery();
+            while(rs.next()){
+                Lent_Book lb = new Lent_Book(rs.getInt("id"),rs.getString("person"),rs.getString("book"),rs.getTimestamp("date"));
+                lentb.add(lb);
+            }
+        }
+        catch (SQLException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+        return lentb;
+    }
+
+    public static Lent_Book getbyId(int id){
+        String search_book = "SELECT * FROM lent_books WHERE id = ?";
+
+        Lent_Book lb = null;
+        try(Connection conn = DataConnection.getConnection();
+            PreparedStatement gbi = conn.prepareStatement(search_book)
+        ){
+            gbi.setInt(1,id);
+            ResultSet rs =  gbi.executeQuery();
+            if(rs.next()){
+                lb = new Lent_Book(rs.getInt("id"),rs.getString("person"),rs.getString("book"),rs.getTimestamp("date"));
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("Error: "+e.getMessage());
+        }
+        return lb;
     }
 }
