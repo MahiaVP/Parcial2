@@ -185,16 +185,22 @@ public class LocationDAO {
         return all;
     }
 
-    public static Location getLocationById(int id) {
+    public static Location getById(int id) {
         String find="SELECT * FROM location WHERE id = ?";
-
+        Location location=null;
         try(Connection conn = DataConnection.getConnection();
-            PreparedStatement gli= conn.prepareStatement(find)
+            PreparedStatement gbi= conn.prepareStatement(find)
         ){
-
+            gbi.setInt(1,id);
+            ResultSet rs=gbi.executeQuery();
+            if(rs.next()){
+                location = new Location(id,rs.getString("book"),rs.getString("author"),rs.getString("section"),rs.getInt("row"));
+                return location;
+            }
         }
         catch(SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
+        return location;
     }
 }

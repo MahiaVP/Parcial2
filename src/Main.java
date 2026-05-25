@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner read = new Scanner(System.in);
-        System.out.println("Library System\n");
+        System.out.println("\n   * *LIBRARY SYSTEM* *\n");
         int k;
         do {
             System.out.println("Type the number of the action you want to perform:\n");
@@ -133,7 +133,7 @@ public class Main {
                                         genre = String.valueOf(Genre.POETRY);
                                         break;
                                     case 7:
-                                        continue;
+                                        break;
                                 }
                                 read.nextLine();
                                 System.out.println("Write how many units of the book will be added or type X to quit:");
@@ -148,7 +148,7 @@ public class Main {
                                 read.nextLine();
                                 System.out.println("Write the book id or type X to quit:");
                                 String id = read.nextLine();
-                                if(id.equals("X")) {
+                                if(id.equalsIgnoreCase("X")) {
                                     break;
                                 }
                                 Book bid=BookDAO.getById(Integer.parseInt(id));
@@ -156,6 +156,7 @@ public class Main {
                                     System.out.println("!! ID NOT FOUND !!");
                                     break;
                                 }
+                                System.out.println("|   id   |         Book         |   Author   |   Genre   |   Units Available   |");
                                 System.out.println(bid);
                                 break;
                             case 5:
@@ -231,20 +232,24 @@ public class Main {
                                                 genre = String.valueOf(Genre.POETRY);
                                                 break;
                                             case 7:
-                                                continue;
+                                                break;
                                         }
                                         List<Book> gen = BookDAO.getByGenre(genre);
                                         System.out.println("|   id   |         Book         |   Author   |   Genre   |   Units Available   |");
                                         for (Book book : gen) {
                                             System.out.println(book);
                                         }
+                                        read.nextLine();
                                         break;
                                     case 4:
-                                        continue;
+                                        break;
                                 }
-                                read.nextLine();
-                                System.out.println("Write the book id");
-                                BookDAO.lendBook(read.nextInt(),name);
+                                System.out.println("Write the book id or type X to quit:");
+                                String id = read.nextLine();
+                                if(id.equalsIgnoreCase("X")) {
+                                    break;
+                                }
+                                BookDAO.lendBook(Integer.parseInt(id),name);
                                 break;
                             case 2://Return book
                                 read.nextLine();
@@ -258,15 +263,16 @@ public class Main {
                                     System.out.println(lentbook);
                                 }
                                 System.out.println("Type the person's id or type X to quit.");
-                                String id = read.nextLine();
-                                if(id.equalsIgnoreCase("X")) {
+                                String idv = read.nextLine();
+                                if(idv.equalsIgnoreCase("X")) {
                                     break;
                                 }
-                                LentDAO.Delete_person(Integer.parseInt(id));
+                                LentDAO.Delete_person(Integer.parseInt(idv));
                                 break;
                             case 3://See all lent books
                                 read.nextLine();
                                 List<Lent_Book> lb = LentDAO.readAll();
+                                System.out.println("|   ID  |        PERSON       |   BOOK    |   DATE    |");
                                 for(Lent_Book lentbook:lb) {
                                     System.out.println(lentbook);
                                 }
@@ -282,6 +288,7 @@ public class Main {
                                         if (title.equals("0")) {
                                             break;
                                         }
+                                        System.out.println("|   ID  |        PERSON       |   BOOK    |   DATE    |");
                                         List<Lent_Book> ttl = LentDAO.getByTitle(title);
                                         for(Lent_Book lentbook:ttl) {
                                             System.out.println(lentbook);
@@ -294,6 +301,7 @@ public class Main {
                                         if (person.equals("0")) {
                                             break;
                                         }
+                                        System.out.println("|   ID  |        PERSON       |   BOOK    |   DATE    |");
                                         List<Lent_Book> per = LentDAO.getByPerson(person);
                                         for (Lent_Book lentbook:per) {
                                             System.out.println(lentbook);
@@ -311,9 +319,10 @@ public class Main {
                                     break;
                                 }
                                 Lent_Book lbi = LentDAO.getbyId(Integer.parseInt(pid));
-                                if(lbi!=null) {
+                                if(lbi==null) {
                                     System.out.println("!! ID NOT FOUND !!");
                                 }
+                                System.out.println("|   ID  |        PERSON       |   BOOK    |   DATE    |");
                                 System.out.println(lbi);
                                 break;
                         }
@@ -334,17 +343,25 @@ public class Main {
                                 switch (read.nextInt()) {
                                     case 1:
                                         read.nextLine();
-                                        System.out.println("Please enter the title:");
+                                        System.out.println("Please enter the title or type 0 to quit:");
                                         String title = read.nextLine();
+                                        if (title.equals("0")) {
+                                            break;
+                                        }
                                         List<Book> bk=BookDAO.getByTitle(title);
+                                        System.out.println("|   ID   |   BOOK   |   AUTHOR   |  UNITS   |");
                                         for(Book book:bk) {
                                             System.out.println(book);
                                         }
                                         break;
                                     case 2:
                                         read.nextLine();
-                                        System.out.println("Please enter the author:");
+                                        System.out.println("Please enter the author or type 0 to quit:");
                                         String author = read.nextLine();
+                                        if (author.equals("0")) {
+                                            break;
+                                        }
+                                        System.out.println("|   ID   |   BOOK   |   AUTHOR   |  UNITS   |");
                                         List<Book> bk1=BookDAO.getByAuthor(author);
                                         for(Book book:bk1) {
                                             System.out.println(book);
@@ -378,6 +395,7 @@ public class Main {
                                         }
                                         read.nextLine();
                                         List<Book> book = BookDAO.getByGenre(genre);
+                                        System.out.println("|   ID   |   BOOK   |   AUTHOR   |  UNITS   |");
                                         for(Book bk2:book) {
                                             System.out.println(bk2);
                                         }
@@ -391,6 +409,7 @@ public class Main {
                                     break;
                                 }
                                 Location loc = LocationDAO.find_title(Integer.parseInt(t));
+                                System.out.println("|   ID   |        BOOK         |   AUTHOR   |  SECTION | ROW |");
                                 System.out.println(loc);
                                 break;
                             case 2:
@@ -405,6 +424,7 @@ public class Main {
                                             break;
                                         }
                                         List<Location> lc = LocationDAO.findByTitle(title);
+                                        System.out.println("|   ID   |        BOOK         |   AUTHOR   |  SECTION | ROW |");
                                         for (Location loc2 : lc) {
                                             System.out.println(loc2);
                                         }
@@ -417,6 +437,7 @@ public class Main {
                                             break;
                                         }
                                         List<Location> au = LocationDAO.findByAuthor(author);
+                                        System.out.println("|   ID   |        BOOK         |   AUTHOR   |  SECTION | ROW |");
                                         for (Location auth : au) {
                                             System.out.println(auth);
                                         }
@@ -429,6 +450,7 @@ public class Main {
                                             break;
                                         }
                                         List<Location> sec = LocationDAO.findBySection(section);
+                                        System.out.println("|   ID   |        BOOK         |   AUTHOR   |  SECTION | ROW |");
                                         for (Location st : sec) {
                                             System.out.println(st);
                                         }
@@ -444,6 +466,7 @@ public class Main {
                                             break;
                                         }
                                         List<Location> rw = LocationDAO.findByRow(Integer.parseInt(row));
+                                        System.out.println("|   ID   |        BOOK         |   AUTHOR   |  SECTION | ROW |");
                                         for (Location rOw : rw) {
                                             System.out.println(rOw);
                                         }
@@ -455,14 +478,21 @@ public class Main {
                             case 3:
                                 read.nextLine();
                                 List<Location> all = LocationDAO.getAllLocation();
+                                System.out.println("|   ID   |        BOOK         |   AUTHOR   |  SECTION | ROW |");
                                 for(Location loc2 : all) {
                                     System.out.println(loc2);
                                 }
+                                break;
                             case 4:
                                 read.nextLine();
                                 System.out.println("Please type the ID:");
-                                Location location = LentDAO.getById(read.nextInt());
+                                Location location = LocationDAO.getById(read.nextInt());
+                                if(location==null) {
+                                    System.out.println("!! ID NOT FOUND !!");
+                                }
+                                System.out.println("|   ID   |        BOOK         |   AUTHOR   |  SECTION | ROW |");
                                 System.out.println(location);
+                                break;
                         }
                         break;
                     }while (n != 5);
