@@ -11,5 +11,6 @@ Firts, you will need to create a database at Neon. Then, in sql editor you need 
 Parcial2/
 ├src/
 │  ├code/
-│  Book. java -LentBook. java -Location.java -db Hop/ BookDAO. java Genre. java -LentDAO. java LLocationDAO. java -DataConnection.java LMain. java env #This is where your .env must be.
+│     ├Book.java
+-LentBook. java -Location.java -db Hop/ BookDAO. java Genre. java -LentDAO. java LLocationDAO. java -DataConnection.java LMain. java env #This is where your .env must be.
 ```
