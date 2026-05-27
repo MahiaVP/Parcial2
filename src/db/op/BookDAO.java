@@ -1,8 +1,8 @@
-package DB.OP;
-import Code.Lent_Book;
-import DB.DataConnection;
+package db.op;
+import code.LentBook;
+import db.DataConnection;
 import java.sql.*;
-import Code.Book;
+import code.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,8 +166,8 @@ public class BookDAO {
             ld.setInt(2,i);
             ld.executeUpdate();
             String book=rs.getString("book");
-            Lent_Book lb = new Lent_Book(book,name);
-            LentDAO.insert_person(lb);
+            LentBook lb = new LentBook(book,name);
+            LentDAO.insertPerson(lb);
             System.out.println("The action was performed successfully. Units available of "+book+": "+ua);
         }
 
@@ -176,7 +176,7 @@ public class BookDAO {
         }
     }
 
-    public static void UpdateQuantity(String book,int q){
+    public static void updateQuantity(String book,int q){
         String search_book = "SELECT * FROM library WHERE book = ?";
         String update = "UPDATE library SET units_available = ? WHERE book = ?";
 

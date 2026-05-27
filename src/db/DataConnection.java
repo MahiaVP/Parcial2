@@ -1,4 +1,4 @@
-package DB;
+package db;
 
 import com.github.shyiko.dotenv.DotEnv;
 import java.sql.Connection;

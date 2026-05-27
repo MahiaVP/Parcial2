@@ -1,8 +1,8 @@
-package Code;
+package code;
 
 import java.sql.Timestamp;
 
-public class Lent_Book {
+public class LentBook {
     private int id;
     private String book;
     private String person;
@@ -22,14 +22,14 @@ public class Lent_Book {
     public Timestamp getdate(){
         return date;
     }
-    public Lent_Book(int id, String book, String person, Timestamp date) {
+    public LentBook(int id, String book, String person, Timestamp date) {
         this.id = id;
         this.book = book;
         this.person = person;
         this.date = date;
     }
 
-    public Lent_Book(String book, String person) {
+    public LentBook(String book, String person) {
         this.book = book;
         this.person = person;
     }

@@ -1,13 +1,13 @@
-package DB.OP;
-import Code.Location;
-import DB.DataConnection;
+package db.op;
+import code.Location;
+import db.DataConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class LocationDAO {
-    public static Location find_title(int id) {
+    public static Location findTitle(int id) {
         String find="SELECT * FROM library WHERE id = ?";
         String search="SELECT * FROM location WHERE book = ?";
         String Update="INSERT INTO location (book,author,section,row) VALUES (?,?,?,?)";
