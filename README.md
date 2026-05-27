@@ -1,5 +1,5 @@
 # Library System with Java and PostgreSQL
-This project is a library system that lets libraries have control of their books available, as well of the books they have lent. Furthermore, they can also check the physical location of a book. This project helps with organization and the follo-up of every book that they own.
+This project is a library system that lets libraries have control of their books available, as well of the books they have lent. Furthermore, they can also check the physical location of a book. This project helps with organization and the follow-up of every book that they own.
 ## Used technologies
 - Java JDK 17
 - PostgreSQL
