@@ -26,14 +26,14 @@ public class BookDAO {
         ){
 
             while (rs.next()) {
-                Object[] fila = {
+                Object[] row = {
                         rs.getInt("id"),
                         rs.getString("book"),
                         rs.getString("author"),
                         rs.getString("genre"),
                         rs.getInt("units_available")
                 };
-                book.addRow(fila);
+                book.addRow(row);
             }
         }
         catch (SQLException e){

@@ -1,6 +1,9 @@
 package db.op;
 import code.LentBook;
 import  db.DataConnection;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,23 +73,33 @@ public class LentDAO {
 
     }
 
-    public static List<LentBook> readAll(){
-        List <LentBook> lentb = new ArrayList<>();
-
+    public static JTable readAll(){
         String search_book = "SELECT * FROM lent_books";
+
+        DefaultTableModel lent = new DefaultTableModel();
+        lent.addColumn("ID");
+        lent.addColumn("Book");
+        lent.addColumn("Person");
+        lent.addColumn("Date");
+
         try(Connection conn = DataConnection.getConnection();
             PreparedStatement rl = conn.prepareStatement(search_book) ;
             ResultSet rs = rl.executeQuery()
         ){
             while(rs.next()){
-                LentBook lb = new LentBook(rs.getInt("id"),rs.getString("person"),rs.getString("book"),rs.getTimestamp("date"));
-                lentb.add(lb);
+                Object[] row = {
+                        rs.getInt("id"),
+                        rs.getString("book"),
+                        rs.getString("person"),
+                        rs.getTimestamp("date")
+                };
+                lent.addRow(row);
             }
         }
         catch (SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
-        return lentb;
+        return new JTable(lent);
     }
 
     public static List<LentBook> getByTitle(String title){
