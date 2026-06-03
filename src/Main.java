@@ -19,7 +19,7 @@ public class Main {
 
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setContentPane(ui.getMainPanel());
-            frame.setSize(700, 800);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         });

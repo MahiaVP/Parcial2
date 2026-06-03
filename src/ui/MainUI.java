@@ -46,7 +46,7 @@ public class MainUI {
 
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setContentPane(ui.getPanel());
-                frame.setSize(700, 800);
+                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }

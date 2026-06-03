@@ -2,6 +2,8 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Search {
     private JPanel searchPanel;
@@ -25,7 +27,7 @@ public class Search {
         JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 200));
         botonesPanel.setOpaque(false);
 
-        Dimension size = new Dimension(150, 100);
+        Dimension size = new Dimension(200, 100);
         button1.setPreferredSize(size);
         button2.setPreferredSize(size);
         button3.setPreferredSize(size);
@@ -37,6 +39,12 @@ public class Search {
         botonesPanel.add(button4);
 
         searchPanel.add(botonesPanel, BorderLayout.CENTER);
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public JPanel getPanel() {
