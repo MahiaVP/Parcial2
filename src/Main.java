@@ -7,9 +7,23 @@ import db.op.LentDAO;
 import db.op.LocationDAO;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.*;
+import ui.MainUI;
+import ui.*;
 
 public class Main {
     public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            MainUI ui = new MainUI();
+            JFrame frame = new JFrame("LIBRARY_SYSTEM");
+
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setContentPane(ui.getMainPanel());
+            frame.setSize(700, 800);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+/*
         Scanner read = new Scanner(System.in);
         System.out.println("\n   * *LIBRARY SYSTEM* *\n");
         int k;
@@ -579,5 +593,8 @@ public class Main {
                 k=1;
             }
         }while (k != 4) ;
+
+
+ */
     }
 }
