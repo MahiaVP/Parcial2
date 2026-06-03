@@ -24,62 +24,6 @@ public class Main {
             frame.setVisible(true);
         });
 /*
-        Scanner read = new Scanner(System.in);
-        System.out.println("\n   * *LIBRARY SYSTEM* *\n");
-        int k;
-        do {
-            System.out.println("Type the number of the action you want to perform:\n");
-            System.out.println("1. Library module.\n2. Lending module.\n3. Location module.\n4. Exit");
-            if(read.hasNextInt()) {
-                k= read.nextInt();
-                switch (k) { //Choose module
-                    case 1: //Library module
-                        read.nextLine();
-                        int l;
-                        do {
-                            System.out.println("\n     *|   LIBRARY MODULE  |*");
-                            System.out.println("1. See all books in the library.\n2. Filter by category and check availability.\n3. Add a book to the system.\n4. Search a book with id.\n5. Return");
-                            if(read.hasNextInt()) {
-                                l= read.nextInt();
-                                switch (l) { //Library module options
-                                    case 1: //See all
-                                        List<Book> books = BookDAO.getAllBooks();
-                                        System.out.println("|   id   |         Book         |   Author   |   Genre   |   Units Available   |");
-                                        for (Book book : books) {
-                                            System.out.println(book);
-                                        }
-                                        break;
-                                    case 2: //Category
-                                        read.nextLine();
-                                        System.out.println("How would you like to search?\n1. Title\n2. Author\n3. Genre\n4. Return.");
-                                        if(read.hasNextInt()){
-                                            switch (read.nextInt()) { //Choose category
-                                                case 1:
-                                                    read.nextLine();
-                                                    System.out.println("Please enter the title or type 0 to quit:");
-                                                    String title = read.nextLine();
-                                                    if (title.equals("0")) {
-                                                        break;
-                                                    }
-                                                    List<Book> tle = BookDAO.getByTitle(title);
-                                                    System.out.println("|   id   |         Book         |   Author   |   Genre   |   Units Available   |");
-                                                    for (Book book : tle) {
-                                                        System.out.println(book);
-                                                    }
-                                                    break;
-                                                case 2:
-                                                    read.nextLine();
-                                                    System.out.println("Please enter the author or type 0 to quit:");
-                                                    String author = read.nextLine();
-                                                    if (author.equals("0")) {
-                                                        break;
-                                                    }
-                                                    List<Book> aut = BookDAO.getByAuthor(author);
-                                                    System.out.println("|   id   |         Book         |   Author   |   Genre   |   Units Available   |");
-                                                    for (Book book : aut) {
-                                                        System.out.println(book);
-                                                    }
-                                                    break;
                                                 case 3:
                                                     read.nextLine();
                                                     System.out.println("Please enter the genre:\n1. Fantasy\n2. Romance\n3. Science Fiction.\n4. Mystery.\n5. Horror.\n6. Poetry.\n7. Return.");
@@ -205,6 +149,9 @@ public class Main {
                         }while (l != 5);
 
                         break;
+                        */ //SEARCH MODULE
+
+        /*
                     case 2: //Lent module
                         read.nextLine();
                         int m;
@@ -397,8 +344,9 @@ public class Main {
                             }
                         }while(m!=6);
                         break;
+                        */ //LEND MODULE
 
-                    case 3://Location module
+        /*     case 3://Location module
                         read.nextLine();
                         int n;
                         do{
@@ -595,6 +543,6 @@ public class Main {
         }while (k != 4) ;
 
 
- */
+ */ //LOCATION MODULE
     }
 }

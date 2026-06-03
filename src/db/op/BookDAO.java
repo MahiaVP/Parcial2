@@ -3,28 +3,43 @@ import code.LentBook;
 import db.DataConnection;
 import java.sql.*;
 import code.Book;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookDAO {
-    public static List<Book> getAllBooks(){
-        List<Book> books = new ArrayList<>();
-
+    public static JTable getAllBooks(){
         String read_books = "SELECT * FROM library ORDER BY id ASC";
+
+        DefaultTableModel book = new DefaultTableModel();
+        book.addColumn("ID");
+        book.addColumn("Book");
+        book.addColumn("Author");
+        book.addColumn("Genre");
+        book.addColumn("Units Available");
 
         try(Connection conn = DataConnection.getConnection();
             PreparedStatement rb = conn.prepareStatement(read_books);
             ResultSet rs = rb.executeQuery()
         ){
-            while(rs.next()){
-                Book b = new Book(rs.getInt("id"),rs.getString("book"),rs.getString("author"), rs.getString("genre"), rs.getInt("units_available"));
-                books.add(b);
+
+            while (rs.next()) {
+                Object[] fila = {
+                        rs.getInt("id"),
+                        rs.getString("book"),
+                        rs.getString("author"),
+                        rs.getString("genre"),
+                        rs.getInt("units_available")
+                };
+                book.addRow(fila);
             }
         }
         catch (SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
-        return books;
+        return new JTable(book);
     }
 
     public static List<Book> getByTitle(String s){

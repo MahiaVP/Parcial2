@@ -1,4 +1,6 @@
-package ui;
+package ui.search;
+
+import ui.Background;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +10,8 @@ import java.awt.event.ActionListener;
 public class Search {
     private JPanel searchPanel;
     private JLabel title;
-    private JButton button1;
     private JButton button2;
+    private JButton button1;
     private JButton button3;
     private JButton button4;
 
@@ -39,10 +41,17 @@ public class Search {
         botonesPanel.add(button4);
 
         searchPanel.add(botonesPanel, BorderLayout.CENTER);
-        button2.addActionListener(new ActionListener() {
+        button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SeeAll ui = new SeeAll();
+                JFrame frame = new JFrame("SEE_ALL");
 
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(ui.getSeeAll());
+                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
             }
         });
     }
