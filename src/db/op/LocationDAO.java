@@ -1,6 +1,9 @@
 package db.op;
 import code.Location;
 import db.DataConnection;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -165,24 +168,35 @@ public class LocationDAO {
         return rw;
     }
 
-    public static List<Location> getAllLocation() {
-        List<Location> all=new ArrayList<>();
-
+    public static JTable getAllLocation() {
         String find="SELECT * FROM location";
+
+        DefaultTableModel loc=new DefaultTableModel();
+        loc.addColumn("id");
+        loc.addColumn("book");
+        loc.addColumn("author");
+        loc.addColumn("section");
+        loc.addColumn("row");
 
         try(Connection conn = DataConnection.getConnection();
             PreparedStatement rl = conn.prepareStatement(find);
             ResultSet rs = rl.executeQuery()
         ){
             while(rs.next()){
-                Location eve = new Location(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("section"),rs.getInt("row"));
-                all.add(eve);
+                Object[] row={
+                        rs.getInt("id"),
+                        rs.getString("book"),
+                        rs.getString("author"),
+                        rs.getString("section"),
+                        rs.getInt("row")
+                };
+                loc.addRow(row);
             }
         }
         catch(SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
-        return all;
+        return new JTable(loc);
     }
 
     public static Location getById(int id) {

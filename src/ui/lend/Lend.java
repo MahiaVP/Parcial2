@@ -1,7 +1,6 @@
 package ui.lend;
 
 import ui.Background;
-import ui.search.SeeAll;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +44,7 @@ public class Lend {
         botonesPanel.add(searchByIDButton);
 
         lendPanel.add(botonesPanel, BorderLayout.CENTER);
+
         seeAllButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
