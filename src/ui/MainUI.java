@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 
 import ui.lend.Lend;
+import ui.location.Loc;
 import ui.search.Search;
 
 import java.awt.*;
@@ -62,6 +63,19 @@ public class MainUI {
 
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setContentPane(ui.getLend());
+                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Loc ui = new Loc();
+                JFrame frame = new JFrame("LIBRARY_SYSTEM_SEARCH");
+
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(ui.getLocationPanel());
                 frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
