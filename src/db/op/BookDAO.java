@@ -24,7 +24,6 @@ public class BookDAO {
             PreparedStatement rb = conn.prepareStatement(read_books);
             ResultSet rs = rb.executeQuery()
         ){
-
             while (rs.next()) {
                 Object[] row = {
                         rs.getInt("id"),
@@ -42,28 +41,36 @@ public class BookDAO {
         return new JTable(book);
     }
 
-    public static List<Book> getByTitle(String s){
-        List<Book> title = new ArrayList<>();
-
+    public static JTable getByTitle(String s){
         String search_title = "SELECT * FROM library WHERE book ILIKE ? ORDER BY id ASC";
+        DefaultTableModel book = new DefaultTableModel();
+        book.addColumn("ID");
+        book.addColumn("Book");
+        book.addColumn("Author");
+        book.addColumn("Genre");
+        book.addColumn("Units Available");
 
         try (Connection conn = DataConnection.getConnection();
             PreparedStatement di = conn.prepareStatement(search_title)
         ){
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
-            while(rs.next()){
-                Book b = new Book(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("genre"),rs.getInt("units_available"));
-                title.add(b);
-            }
-            if(title.isEmpty()){
-                System.out.println("!! TITLE NOT FOUND !!");
+
+            while (rs.next()) {
+                Object[] row = {
+                        rs.getInt("id"),
+                        rs.getString("book"),
+                        rs.getString("author"),
+                        rs.getString("genre"),
+                        rs.getInt("units_available")
+                };
+                book.addRow(row);
             }
         }
         catch(Exception e){
             System.err.println("Error: "+e.getMessage());
         }
-        return title;
+        return new JTable(book);
     }
 
     public static List <Book> getByAuthor(String s){
