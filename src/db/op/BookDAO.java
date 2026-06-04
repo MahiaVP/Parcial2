@@ -169,8 +169,14 @@ public class BookDAO {
         }
     }
 
-    public static Book getById(int id){
+    public static JTable getById(int id){
         String add_Book="SELECT * FROM Library WHERE id=?";
+        DefaultTableModel idT = new DefaultTableModel();
+        idT.addColumn("ID");
+        idT.addColumn("Book");
+        idT.addColumn("Author");
+        idT.addColumn("Genre");
+        idT.addColumn("Units Available");
 
         Book b =null;
         try(Connection conn = DataConnection.getConnection();
@@ -179,13 +185,20 @@ public class BookDAO {
             gi.setInt(1, id);
             ResultSet rs = gi.executeQuery();
             if (rs.next()) {
-                b = new Book(rs.getInt("id"), rs.getString("book"), rs.getString("author"), rs.getString("genre"), rs.getInt("units_available"));
+                Object[] row = {
+                        rs.getInt("id"),
+                        rs.getString("book"),
+                        rs.getString("author"),
+                        rs.getString("genre"),
+                        rs.getInt("units_available")
+                };
+                idT.addRow(row);
             }
         }
         catch (SQLException e){
             System.err.println("Error: "+e.getMessage());
         }
-        return b;
+        return new  JTable(idT);
     }
 
     public static void lendBook(int i,String name){

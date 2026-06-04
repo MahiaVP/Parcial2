@@ -17,9 +17,6 @@ public class Search {
     private JButton button1;
     private JButton button3;
     private JButton button4;
-    private JTextField textField1;
-    private JLabel id;
-    private JButton searchButton;
 
     public Search() {
         searchPanel = new Background.imgMainPanel("/images/backgroundSearch.jpg");
@@ -101,6 +98,19 @@ public class Search {
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setContentPane(ui.getPanel());
                 frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                id ui = new id();
+                JFrame frame = new JFrame("ID");
+
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(ui.getIdPanel());
+                frame.setSize(300, 150);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
