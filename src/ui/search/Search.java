@@ -17,6 +17,9 @@ public class Search {
     private JButton button1;
     private JButton button3;
     private JButton button4;
+    private JTextField textField1;
+    private JLabel id;
+    private JButton searchButton;
 
     public Search() {
         searchPanel = new Background.imgMainPanel("/images/backgroundSearch.jpg");
@@ -59,7 +62,7 @@ public class Search {
 
                 JButton exportButton = new JButton("Export TXT");
                 exportButton.addActionListener(ev -> {
-                    try (FileWriter fw = new FileWriter("TABLE.txt")) {
+                    try (FileWriter fw = new FileWriter("ALLTABLE.txt")) {
                         for (int i = 0; i < table.getRowCount(); i++) {
                             for (int j = 0; j < table.getColumnCount(); j++) {
                                 fw.write(table.getValueAt(i, j).toString() + "\t");
@@ -87,7 +90,19 @@ public class Search {
                 frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
+            }
+        });
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddBook ui = new AddBook();
+                JFrame frame = new JFrame("ADD BOOK");
 
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(ui.getPanel());
+                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
             }
         });
     }

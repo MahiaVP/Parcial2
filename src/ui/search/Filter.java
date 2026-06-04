@@ -169,27 +169,26 @@ public class Filter {
         searchButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String criterio = textField.getText();
+                String title = textField.getText();
 
-                if (criterio.isEmpty()) {
+                if (title.isEmpty()) {
                     JOptionPane.showMessageDialog(filterPanel, "Please write a title");
                     return;
                 }
 
-                JTable table = BookDAO.getByTitle(criterio);
+                JTable table = BookDAO.getByTitle(title);
 
                 JFrame resultsFrame = new JFrame("RESULTS");
                 resultsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 resultsFrame.setSize(700, 400);
                 resultsFrame.setLocationRelativeTo(null);
 
-                // Meter la tabla en un JScrollPane
                 JScrollPane scrollPane = new JScrollPane(table);
                 resultsFrame.add(scrollPane, BorderLayout.CENTER);
 
                 JButton exportButton = new JButton("Export TXT");
                 exportButton.addActionListener(ev -> {
-                    try (FileWriter fw = new FileWriter("TABLE.txt")) {
+                    try (FileWriter fw = new FileWriter("BTTABLE.txt")) {
                         for (int i = 0; i < table.getRowCount(); i++) {
                             for (int j = 0; j < table.getColumnCount(); j++) {
                                 fw.write(table.getValueAt(i, j).toString() + "\t");
@@ -204,7 +203,82 @@ public class Filter {
 
                 resultsFrame.add(exportButton, BorderLayout.SOUTH);
 
-                // Mostrar el nuevo frame
+                resultsFrame.setVisible(true);
+            }
+        });
+        searchButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String author = textField1.getText();
+
+                if (author.isEmpty()) {
+                    JOptionPane.showMessageDialog(filterPanel, "Please write an author");
+                }
+
+                JTable table = BookDAO.getByAuthor(author);
+
+                JFrame resultsFrame = new JFrame("RESULTS");
+                resultsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                resultsFrame.setSize(700, 400);
+                resultsFrame.setLocationRelativeTo(null);
+
+                JScrollPane scrollPane = new JScrollPane(table);
+                resultsFrame.add(scrollPane, BorderLayout.CENTER);
+
+                JButton exportButton = new JButton("Export TXT");
+                exportButton.addActionListener(ev -> {
+                    try (FileWriter fw = new FileWriter("BATABLE.txt")) {
+                        for (int i = 0; i < table.getRowCount(); i++) {
+                            for (int j = 0; j < table.getColumnCount(); j++) {
+                                fw.write(table.getValueAt(i, j).toString() + "\t");
+                            }
+                            fw.write("\n");
+                        }
+                        JOptionPane.showMessageDialog(resultsFrame, "Table successfully exported.");
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
+                    }
+                });
+                resultsFrame.add(exportButton, BorderLayout.SOUTH);
+
+                resultsFrame.setVisible(true);
+            }
+        });
+        searchButton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String genre = comboBox1.getSelectedItem().toString();
+
+                if (genre.isEmpty()) {
+                    JOptionPane.showMessageDialog(filterPanel, "Please select a genre");
+                }
+
+                JTable table = BookDAO.getByGenre(genre);
+
+                JFrame resultsFrame = new JFrame("RESULTS");
+                resultsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                resultsFrame.setSize(700, 400);
+                resultsFrame.setLocationRelativeTo(null);
+
+                JScrollPane scrollPane = new JScrollPane(table);
+                resultsFrame.add(scrollPane, BorderLayout.CENTER);
+
+                JButton exportButton = new JButton("Export TXT");
+                resultsFrame.add(exportButton, BorderLayout.SOUTH);
+                exportButton.addActionListener(ev -> {
+                    try (FileWriter fw = new FileWriter("BGTABLE.txt")) {
+                        for (int i = 0; i < table.getRowCount(); i++) {
+                            for (int j = 0; j < table.getColumnCount(); j++) {
+                                fw.write(table.getValueAt(i, j).toString() + "\t");
+                            }
+                            fw.write("\n");
+                        }
+                        JOptionPane.showMessageDialog(resultsFrame, "Table successfully exported.");
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
+                    }
+                });
+
                 resultsFrame.setVisible(true);
             }
         });

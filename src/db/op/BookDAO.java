@@ -73,10 +73,15 @@ public class BookDAO {
         return new JTable(book);
     }
 
-    public static List <Book> getByAuthor(String s){
-        List<Book> author = new ArrayList<>();
-
+    public static JTable getByAuthor(String s){
         String search_author = "SELECT * FROM library WHERE author ILIKE ?";
+
+        DefaultTableModel author= new DefaultTableModel();
+        author.addColumn("ID");
+        author.addColumn("Book");
+        author.addColumn("Author");
+        author.addColumn("Genre");
+        author.addColumn("Units Available");
 
         try (Connection conn = DataConnection.getConnection();
              PreparedStatement di = conn.prepareStatement(search_author)
@@ -84,12 +89,15 @@ public class BookDAO {
             di.setString(1,"%"+s+"%");
             ResultSet rs = di.executeQuery();
 
-            while(rs.next()){
-                Book b = new Book(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("genre"),rs.getInt("units_available"));
-                author.add(b);
-            }
-            if(author.isEmpty()){
-                System.out.println("!! AUTHOR NOT FOUND !!");
+            while (rs.next()) {
+                Object[] row = {
+                        rs.getInt("id"),
+                        rs.getString("book"),
+                        rs.getString("author"),
+                        rs.getString("genre"),
+                        rs.getInt("units_available")
+                };
+                author.addRow(row);
             }
         }
 
@@ -97,13 +105,18 @@ public class BookDAO {
             System.err.println("Error: "+e.getMessage());
         }
 
-        return author;
+        return new JTable(author);
     }
 
-    public static List<Book> getByGenre(String s){
-        List<Book> genre = new ArrayList<>();
-
+    public static JTable getByGenre(String s){
         String search_genre = "SELECT * FROM library WHERE genre = ? ORDER BY id ASC";
+
+        DefaultTableModel genre = new DefaultTableModel();
+        genre.addColumn("ID");
+        genre.addColumn("Book");
+        genre.addColumn("Author");
+        genre.addColumn("Genre");
+        genre.addColumn("Units Available");
 
         try (Connection conn = DataConnection.getConnection();
              PreparedStatement di = conn.prepareStatement(search_genre)
@@ -111,34 +124,48 @@ public class BookDAO {
             di.setString(1,s);
             ResultSet rs = di.executeQuery();
 
-            while(rs.next()){
-                Book b = new Book(rs.getInt("id"),rs.getString("book"),rs.getString("author"),rs.getString("genre"),rs.getInt("units_available"));
-                genre.add(b);
+            while (rs.next()) {
+                Object[] row = {
+                        rs.getInt("id"),
+                        rs.getString("book"),
+                        rs.getString("author"),
+                        rs.getString("genre"),
+                        rs.getInt("units_available")
+                };
+                genre.addRow(row);
             }
         }
         catch(Exception e){
             System.err.println("Error: "+e.getMessage());
         }
-        return genre;
+        return new JTable (genre);
     }
 
     public static void insertBook(Book b){
         String add_Book="INSERT INTO Library (Book,Author,Genre,Units_Available) values(?,?,?,?)";
 
+        JFrame resultsFrame = new JFrame("RESULTS");
+        resultsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        resultsFrame.setSize(700, 400);
+        resultsFrame.setLocationRelativeTo(null);
+
         try (Connection conn = DataConnection.getConnection();
              PreparedStatement di = conn.prepareStatement(add_Book)
         ){
+
             di.setString(1, b.getTitle());
             di.setString(2, b.getAuthor());
             di.setString(3,b.getGenre());
             di.setInt(4,b.getAvailability());
             di.executeUpdate();
 
-            System.out.println("Added correctly");
+
+            JOptionPane.showMessageDialog(resultsFrame, "Book added correctly.");
         }
         catch (SQLException e)
         {
-            System.err.println("Error: "+e.getMessage());
+            JOptionPane.showMessageDialog(resultsFrame, "Error: " + e.getMessage());
+            resultsFrame.setVisible(true);
         }
     }
 
