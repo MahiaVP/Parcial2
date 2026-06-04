@@ -23,6 +23,7 @@ public class Filter {
     private JButton searchButton2;
     private JButton searchButton3;
     private JComboBox comboBox1;
+    private JLabel genre;
 
 
     public Filter(){
@@ -112,10 +113,29 @@ public class Filter {
 
         //BY GENRE
 
+        JPanel genrePanel = new JPanel();
+        genrePanel.setOpaque(true);
+        genrePanel.setBackground(new Color(140, 90, 239, 140));
+
+        genrePanel.setLayout(new BoxLayout(genrePanel, BoxLayout.Y_AXIS));
+        genre.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        comboBox1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        comboBox1.setMaximumSize(new Dimension(300, 30));
+        searchButton3.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        genrePanel.add(Box.createVerticalGlue());
+        genrePanel.add(genre);
+        genrePanel.add(Box.createVerticalStrut(20));
+        genrePanel.add(comboBox1);
+        genrePanel.add(Box.createVerticalStrut(20));
+        genrePanel.add(searchButton3);
+        genrePanel.add(Box.createVerticalGlue());
 
 
         fieldsPanel.add(titlePanel, "TITLE");
         fieldsPanel.add(authorPanel, "AUTHOR");
+        fieldsPanel.add(genrePanel, "GENRE");
 
         centerPanel.add(fieldsPanel);
         filterPanel.add(centerPanel, BorderLayout.CENTER);
@@ -138,10 +158,16 @@ public class Filter {
         genreRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                cl.show(fieldsPanel, "GENRE");
             }
         });
 
+        searchButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public JPanel getFilter() {
