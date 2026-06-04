@@ -54,6 +54,20 @@ public class Search {
                 frame.setVisible(true);
             }
         });
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Filter ui = new Filter();
+                JFrame frame = new JFrame("FILTER");
+
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(ui.getFilter());
+                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+
+            }
+        });
     }
 
     public JPanel getPanel() {

@@ -1,0 +1,150 @@
+package ui.search;
+
+import db.op.Genre;
+import ui.Background;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Filter {
+
+    private JPanel filterPanel;
+    private JLabel filterTitle;
+    private JRadioButton titleRadioButton;
+    private JRadioButton authorRadioButton;
+    private JRadioButton genreRadioButton;
+    private JTextField textField;
+    private JTextField textField1;
+    private JLabel title;
+    private JLabel author;
+    private JButton searchButton1;
+    private JButton searchButton2;
+    private JButton searchButton3;
+    private JComboBox comboBox1;
+
+
+    public Filter(){
+        comboBox1.setModel(new DefaultComboBoxModel<>(Genre.values()));
+
+        filterPanel = new Background.imgMainPanel("/images/backgroundSearch.jpg");
+        filterPanel.setLayout(new BorderLayout());
+
+        filterTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        filterTitle.setForeground(Color.WHITE);
+        filterTitle.setOpaque(true);
+        filterTitle.setBackground(new Color(0, 0, 0, 128));
+
+        filterPanel.add(filterTitle, BorderLayout.NORTH);
+
+        JPanel centerPanel = new JPanel(new GridLayout(1,2));
+        centerPanel.setOpaque(false);
+
+        JPanel optionsPanel = new JPanel();
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+        optionsPanel.setOpaque(true);
+        optionsPanel.setBackground(new Color(239, 90, 237, 140));
+
+        titleRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        authorRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        genreRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(titleRadioButton);
+        group.add(authorRadioButton);
+        group.add(genreRadioButton);
+
+        optionsPanel.add(Box.createVerticalGlue());
+        optionsPanel.add(titleRadioButton);
+        optionsPanel.add(Box.createVerticalStrut(20));
+        optionsPanel.add(authorRadioButton);
+        optionsPanel.add(Box.createVerticalStrut(20));
+        optionsPanel.add(genreRadioButton);
+        optionsPanel.add(Box.createVerticalGlue());
+
+        centerPanel.add(optionsPanel);
+
+        JPanel fieldsPanel = new JPanel(new CardLayout());
+        fieldsPanel.setOpaque(false);
+
+        //BY TITLE
+
+        JPanel titlePanel = new JPanel();
+        titlePanel.setOpaque(true);
+        titlePanel.setBackground(new Color(90, 115, 239, 140));
+
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        textField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        textField.setMaximumSize(new Dimension(300, 30));
+        searchButton1.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        titlePanel.add(Box.createVerticalGlue());
+        titlePanel.add(title);
+        titlePanel.add(Box.createVerticalStrut(20));
+        titlePanel.add(textField);
+        titlePanel.add(Box.createVerticalStrut(20));
+        titlePanel.add(searchButton1);
+        titlePanel.add(Box.createVerticalGlue());
+
+        //BY AUTHOR
+
+        JPanel authorPanel = new JPanel();
+        authorPanel.setOpaque(true);
+        authorPanel.setBackground(new Color(90, 239, 177, 140));
+
+        authorPanel.setLayout(new BoxLayout(authorPanel, BoxLayout.Y_AXIS));
+        author.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        textField1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        textField1.setMaximumSize(new Dimension(300, 30));
+        searchButton2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        authorPanel.add(Box.createVerticalGlue());
+        authorPanel.add(author);
+        authorPanel.add(Box.createVerticalStrut(20));
+        authorPanel.add(textField1);
+        authorPanel.add(Box.createVerticalStrut(20));
+        authorPanel.add(searchButton2);
+        authorPanel.add(Box.createVerticalGlue());
+
+        //BY GENRE
+
+
+
+        fieldsPanel.add(titlePanel, "TITLE");
+        fieldsPanel.add(authorPanel, "AUTHOR");
+
+        centerPanel.add(fieldsPanel);
+        filterPanel.add(centerPanel, BorderLayout.CENTER);
+
+        CardLayout cl = (CardLayout) fieldsPanel.getLayout();
+
+        titleRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(fieldsPanel, "TITLE");
+            }
+        });
+        authorRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(fieldsPanel, "AUTHOR");
+            }
+        });
+
+        genreRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+    }
+
+    public JPanel getFilter() {
+        return filterPanel;
+    }
+}
