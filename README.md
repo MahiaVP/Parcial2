@@ -5,6 +5,7 @@ This project is a library system that lets libraries have control of their books
 - PostgreSQL
 - Neon database
 - dotenv
+- Swing UI
 ## How to run the program
 
 >[!NOTE]
