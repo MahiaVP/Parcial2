@@ -73,7 +73,7 @@
         <properties>
           <font name="JetBrains Mono" size="18" style="1"/>
           <foreground color="-16777216"/>
-          <text value="Label:"/>
+          <text value="Author"/>
         </properties>
       </component>
       <component id="bbd8e" class="javax.swing.JLabel" binding="genre">

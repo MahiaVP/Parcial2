@@ -257,10 +257,6 @@ public class Filter {
             public void actionPerformed(ActionEvent e) {
                 String genre = comboBox1.getSelectedItem().toString();
 
-                if (genre.isEmpty()) {
-                    JOptionPane.showMessageDialog(filterPanel, "Please select a genre");
-                }
-
                 JTable table = BookDAO.getByGenre(genre);
 
                 JFrame resultsFrame = new JFrame("RESULTS");
@@ -272,6 +268,7 @@ public class Filter {
                 resultsFrame.add(scrollPane, BorderLayout.CENTER);
 
                 JButton exportButton = new JButton("Export TXT");
+                resultsFrame.add(exportButton, BorderLayout.SOUTH);
                 exportButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ev) {
@@ -288,7 +285,6 @@ public class Filter {
                         }
                     }
                 });
-
 
                 resultsFrame.setVisible(true);
             }

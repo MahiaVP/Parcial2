@@ -1,12 +1,3 @@
-import code.Book;
-import code.LentBook;
-import code.Location;
-import db.op.BookDAO;
-import db.op.Genre;
-import db.op.LentDAO;
-import db.op.LocationDAO;
-import java.util.List;
-import java.util.Scanner;
 import javax.swing.*;
 import ui.MainUI;
 import ui.*;
