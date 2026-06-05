@@ -187,17 +187,21 @@ public class Filter {
                 resultsFrame.add(scrollPane, BorderLayout.CENTER);
 
                 JButton exportButton = new JButton("Export TXT");
-                exportButton.addActionListener(ev -> {
-                    try (FileWriter fw = new FileWriter("BTTABLE.txt")) {
-                        for (int i = 0; i < table.getRowCount(); i++) {
-                            for (int j = 0; j < table.getColumnCount(); j++) {
-                                fw.write(table.getValueAt(i, j).toString() + "\t");
+
+                exportButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ev) {
+                        try (FileWriter fw = new FileWriter("BTTABLE.txt")) {
+                            for (int i = 0; i < table.getRowCount(); i++) {
+                                for (int j = 0; j < table.getColumnCount(); j++) {
+                                    fw.write(table.getValueAt(i, j).toString() + "\t");
+                                }
+                                fw.write("\n");
                             }
-                            fw.write("\n");
+                            JOptionPane.showMessageDialog(resultsFrame, "Table successfully exported.");
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
                         }
-                        JOptionPane.showMessageDialog(resultsFrame, "Table successfully exported.");
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
                     }
                 });
 
@@ -226,19 +230,23 @@ public class Filter {
                 resultsFrame.add(scrollPane, BorderLayout.CENTER);
 
                 JButton exportButton = new JButton("Export TXT");
-                exportButton.addActionListener(ev -> {
-                    try (FileWriter fw = new FileWriter("BATABLE.txt")) {
-                        for (int i = 0; i < table.getRowCount(); i++) {
-                            for (int j = 0; j < table.getColumnCount(); j++) {
-                                fw.write(table.getValueAt(i, j).toString() + "\t");
+                exportButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ev) {
+                        try (FileWriter fw = new FileWriter("BATABLE.txt")) {
+                            for (int i = 0; i < table.getRowCount(); i++) {
+                                for (int j = 0; j < table.getColumnCount(); j++) {
+                                    fw.write(table.getValueAt(i, j).toString() + "\t");
+                                }
+                                fw.write("\n");
                             }
-                            fw.write("\n");
+                            JOptionPane.showMessageDialog(resultsFrame, "Table successfully exported.");
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
                         }
-                        JOptionPane.showMessageDialog(resultsFrame, "Table successfully exported.");
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
                     }
                 });
+
                 resultsFrame.add(exportButton, BorderLayout.SOUTH);
 
                 resultsFrame.setVisible(true);
@@ -264,20 +272,23 @@ public class Filter {
                 resultsFrame.add(scrollPane, BorderLayout.CENTER);
 
                 JButton exportButton = new JButton("Export TXT");
-                resultsFrame.add(exportButton, BorderLayout.SOUTH);
-                exportButton.addActionListener(ev -> {
-                    try (FileWriter fw = new FileWriter("BGTABLE.txt")) {
-                        for (int i = 0; i < table.getRowCount(); i++) {
-                            for (int j = 0; j < table.getColumnCount(); j++) {
-                                fw.write(table.getValueAt(i, j).toString() + "\t");
+                exportButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ev) {
+                        try (FileWriter fw = new FileWriter("BGTABLE.txt")) {
+                            for (int i = 0; i < table.getRowCount(); i++) {
+                                for (int j = 0; j < table.getColumnCount(); j++) {
+                                    fw.write(table.getValueAt(i, j).toString() + "\t");
+                                }
+                                fw.write("\n");
                             }
-                            fw.write("\n");
+                            JOptionPane.showMessageDialog(resultsFrame, "Table successfully exported.");
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
                         }
-                        JOptionPane.showMessageDialog(resultsFrame, "Table successfully exported.");
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
                     }
                 });
+
 
                 resultsFrame.setVisible(true);
             }

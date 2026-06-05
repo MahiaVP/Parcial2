@@ -34,19 +34,23 @@ public class id {
                 resultsFrame.add(scrollPane, BorderLayout.CENTER);
 
                 JButton exportButton = new JButton("Export TXT");
-                exportButton.addActionListener(ev -> {
-                    try (FileWriter fw = new FileWriter("IDTABLE.txt")) {
-                        for (int i = 0; i < table.getRowCount(); i++) {
-                            for (int j = 0; j < table.getColumnCount(); j++) {
-                                fw.write(table.getValueAt(i, j).toString() + "\t");
+                exportButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ev) {
+                        try (FileWriter fw = new FileWriter("BITABLE.txt")) {
+                            for (int i = 0; i < table.getRowCount(); i++) {
+                                for (int j = 0; j < table.getColumnCount(); j++) {
+                                    fw.write(table.getValueAt(i, j).toString() + "\t");
+                                }
+                                fw.write("\n");
                             }
-                            fw.write("\n");
+                            JOptionPane.showMessageDialog(resultsFrame, "Table successfully exported.");
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
                         }
-                        JOptionPane.showMessageDialog(resultsFrame, "Table exported successfully.");
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(resultsFrame, "Error: " + ex.getMessage());
                     }
                 });
+
 
                 resultsFrame.add(exportButton, BorderLayout.SOUTH);
                 resultsFrame.setVisible(true);
